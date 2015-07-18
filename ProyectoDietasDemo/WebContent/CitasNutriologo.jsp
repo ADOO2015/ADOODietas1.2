@@ -60,8 +60,7 @@
 
 <div class="container">
 		<div class="row">
-			<div class="col-md-12">
-			<center>	
+			<div align="center" >
 				<h1>Citas del Paciente</h1>
 				<div></div>
 				<div style="width:50%">
@@ -94,13 +93,14 @@
 						</table>
 					</div>
 				</div>
-				</center>
+
 			</div>
 			</div>
-			<center>
-			<h3>Proximas Citas Agendadas</h3>
+			<div align="center">
+			<h3>Próximas Citas Agendadas</h3>
 				<div>
 				<div style="width:50%">
+						
 						<table class = "table table-striped">
 							<thead>
 								<tr>
@@ -117,10 +117,18 @@
 								        	for(int i = 0; i < citas.size(); i++){ 
 										%>
 										<tr>
-								            <td><%=citas.get(i).getFecha() %></td>
-								            <td><%=citas.get(i).getHora() %></td>
-								            <td><%=citas.get(i).getObservaciones() %></td>
-								            <td><button type="submit" class="btn btn-primary">X</button></td>
+											
+												<td><%=citas.get(i).getFecha() %></td>
+									            <td><%=citas.get(i).getHora() %></td>
+									            <td><%=citas.get(i).getObservaciones() %></td>
+												<td>
+												<form action="eliminarCita" method="post">
+													<input type="hidden" id="idCita" name="idCita" value="<%=citas.get(i).getIdCita()%>">
+													<input type="hidden" id="idPac" name="idPac" value="<%out.print(idPac);%>">
+													<button type="submit" class="btn btn-primary">X</button>
+												</form>
+												</td>
+											
 								       	</tr>          		
 								        <%
 								        	}//End for
@@ -129,20 +137,29 @@
 								        <%} %>
 								</tbody>
 						</table>
+						
 				</div>			
-				<h3>AgendarCita</h3>
-				</center>
-				<div>
-						<form class = "form-horizontal" action="/registrarCita" method="post">
+				<h3>Agendar Cita</h3>
+				<div align="center">
+						<form class = "form-horizontal" action="registrarCita" method="post">
 							<fieldset>
-								<div class="col-lg-1">
-								<input class="form-control" id="dia" placeholder="Día" type="text" name="dia" required>
-								<input class="form-control" id="mes" placeholder="Mes" type="text" name="mes" required>
-								<input class="form-control" id="ano" placeholder="Año" type="text" name="ano" required>
-								<input class="form-control" id="hora" placeholder="Hora (hh:mm)" type="text" name="hora" width="50px" required>
-								<textarea id="obs" placeholder="Observaciones de la cita" type="text" name="obs" rows="4" cols="34" required></textarea>
-								<input type="hidden" id="idMed" name="idMed" value="<%out.println(a.getId());%>"">
-								<input type="hidden" id="idPac" name="idPac" value="<%out.println(idPac);%>">
+								<div class="text-center">
+								<table>
+									<tr>
+										<td>
+										<input class="form-control" id="dia" placeholder="Día" type="text" name="dia" required></td>
+										<td>
+										<input class="form-control" id="mes" placeholder="Mes" type="text" name="mes" required></td>
+										<td>
+										<input class="form-control" id="ano" placeholder="Año" type="text" name="ano" required></td>
+										<td>
+										<input class="form-control" id="hora" placeholder="Hora (hh:mm)" type="text" name="hora" width="50px" required>
+									</tr>
+								</table>
+								<br/>
+								<textarea id="obs" placeholder="Observaciones de la cita"  name="obs" rows="4" cols="41" required></textarea>
+								<input type="hidden" id="idMed" name="idMed" value="<%out.print(a.getId());%>">
+								<input type="hidden" id="idPac" name="idPac" value="<%out.print(idPac);%>">
 								</div>
 								<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
@@ -156,7 +173,7 @@
 				
 		</div> <!-- /row -->
 
-		
+		</div>
 
 </div>	<!-- /container -->
 
@@ -177,7 +194,7 @@
 		<hr>
 		<div class="row">
 			<div class="col-md-4">
-					Mas informaciÃ³n
+					Mas información
 			
 			</div>
 			

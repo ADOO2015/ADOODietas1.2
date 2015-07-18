@@ -39,7 +39,7 @@ public class CitaNutriologoDAO {
 	
 	public void insertCita(int idPac,int idMed,Date fecha,Time hora, String obs) throws SQLException {
 		int idMedPac=0;
-		String query="SELECT idMedicoPaciente FROM medicopaciente WHERE Paciente_idUsuarioPaciente=? AND Medico_idUsuarioMedico=? ORDER BY DESC";
+		String query="SELECT idMedicoPaciente, fechaInicio FROM medicopaciente WHERE Paciente_idUsuarioPaciente=? AND Medico_idUsuarioMedico=? order by fechaInicio desc";
 		PreparedStatement prepStmt;
 		prepStmt = con.builldPreparedStatement(query);
 		prepStmt.setString(1, String.valueOf(idPac));
