@@ -50,7 +50,7 @@ public class RegistrarCita extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		CitaNutriologoDAO citaNutDAO = new CitaNutriologoDAO();
 		Date fecha = Date.valueOf(request.getParameter("ano")+"-"+request.getParameter("mes")+"-"+request.getParameter("dia"));
-		Time hora = Time.valueOf(request.getParameter("hora"));
+		Time hora = Time.valueOf(request.getParameter("hora")+":00");
 		String obs =request.getParameter("obs");
 		int idMed = Integer.parseInt(request.getParameter("idMed"));
 		int idPac = Integer.parseInt(request.getParameter("idPac"));

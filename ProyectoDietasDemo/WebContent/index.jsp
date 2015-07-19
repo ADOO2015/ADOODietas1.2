@@ -131,7 +131,7 @@
 				 
 				 <a href="#">¿Estas buscando clinica?</a>
 				 <br/>
-				 <a href="#">Conócete y cuídate: IMC</a>
+				 <a href="CalcularIMC.html">Conócete y cuídate: IMC</a>
 				  
 				  
 				  
