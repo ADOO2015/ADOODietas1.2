@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `dietas` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `dietas`;
 -- MySQL dump 10.13  Distrib 5.6.19, for linux-glibc2.5 (x86_64)
 --
 -- Host: localhost    Database: dietas
@@ -199,7 +201,7 @@ CREATE TABLE `AlimentosDieta` (
 
 LOCK TABLES `AlimentosDieta` WRITE;
 /*!40000 ALTER TABLE `AlimentosDieta` DISABLE KEYS */;
-INSERT INTO `AlimentosDieta` VALUES (13,17,2),(27,17,2),(1192,17,2),(6153,17,2),(1265,17,1),(3119,17,1),(2008,17,1),(4585,17,4),(62,17,4),(4143,17,3),(5265,17,5),(13,17,2),(27,17,2),(5972,17,2),(1969,17,2),(5957,17,1),(460,17,1),(2100,17,1),(976,17,4),(162,17,4),(1667,17,3),(4171,17,5);
+INSERT INTO `AlimentosDieta` VALUES (13,17,2),(24,17,2),(767,17,2),(6163,17,2),(755,17,1),(230,17,1),(2624,17,1),(636,17,4),(128,17,4),(2424,17,3),(2457,17,5);
 /*!40000 ALTER TABLE `AlimentosDieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,7 +380,7 @@ CREATE TABLE `Dieta` (
   PRIMARY KEY (`idDieta`),
   KEY `fk_Dieta_Paciente1_idx` (`idMedicoPaciente`),
   CONSTRAINT `fk_Dieta_MedicoPaciente` FOREIGN KEY (`idMedicoPaciente`) REFERENCES `MedicoPaciente` (`idMedicoPaciente`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,8 +389,32 @@ CREATE TABLE `Dieta` (
 
 LOCK TABLES `Dieta` WRITE;
 /*!40000 ALTER TABLE `Dieta` DISABLE KEYS */;
-INSERT INTO `Dieta` VALUES (13,3,'2015-07-14',NULL,3387.38),(14,3,'2015-07-14',NULL,3387.38),(15,3,'2015-07-14',NULL,2275.36),(16,3,'2015-07-14',NULL,2275.36),(17,3,'2015-07-14',NULL,2275.36);
+INSERT INTO `Dieta` VALUES (17,3,'2015-07-14','2015-07-18',2275.36),(19,3,'2015-07-18',NULL,2275.36);
 /*!40000 ALTER TABLE `Dieta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DietasNoAprobadas`
+--
+
+DROP TABLE IF EXISTS `DietasNoAprobadas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DietasNoAprobadas` (
+  `idRegimen` int(11) DEFAULT NULL,
+  `fechaRegistro` date DEFAULT NULL,
+  `idAlimento` int(11) DEFAULT NULL,
+  `idTiempo` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DietasNoAprobadas`
+--
+
+LOCK TABLES `DietasNoAprobadas` WRITE;
+/*!40000 ALTER TABLE `DietasNoAprobadas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DietasNoAprobadas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -567,7 +593,7 @@ CREATE TABLE `NutrientesDieta` (
 
 LOCK TABLES `NutrientesDieta` WRITE;
 /*!40000 ALTER TABLE `NutrientesDieta` DISABLE KEYS */;
-INSERT INTO `NutrientesDieta` VALUES (1,17,85.3261),(2,17,341.305),(3,17,50.5636),(5,17,45.5073);
+INSERT INTO `NutrientesDieta` VALUES (1,17,85.3261),(2,17,341.305),(3,17,50.5636),(5,17,45.5073),(1,19,85.3261),(2,19,341.305),(3,19,50.5636),(5,19,45.5073);
 /*!40000 ALTER TABLE `NutrientesDieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -829,6 +855,53 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `AprobarDieta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AprobarDieta`(idReg int,fecha date)
+BEGIN
+	INSERT INTO AlimentosDieta
+		SELECT idAlimento,idRegimen,idTiempo
+        FROM DietasNoAprobadas
+		WHERE idRegimen = idReg AND fechaRegistro = fecha;
+        
+    DELETE FROM DietasNoAprobadas
+		WHERE idRegimen = idReg AND fechaRegistro = fecha;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarDieta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarDieta`(idD int)
+BEGIN
+ SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
+		from AlimentosDieta ad inner join Alimento a on ad.idAlimento = a.idAlimento
+    inner join Tiempo t on t.idTiempo = ad.Tiempo_idTiempo
+where ad.idDieta = idD;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `ConsultarRegimen` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -854,6 +927,32 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarUltimoRegimen` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarUltimoRegimen`(idUP INT)
+BEGIN
+	SELECT 'Calorias',d.caloriasDieta FROM Dieta d inner join MedicoPaciente mp
+			on mp.idMedicoPaciente = d.idMedicoPaciente
+		where mp.Paciente_idUsuarioPaciente = idUP
+	UNION
+    select n.nombre,nd.cantidad from Dieta d inner join NutrientesDieta nd on d.idDieta = nd.idDieta
+		inner join Nutrientes n on n.idNutrientes = nd.idNutriente
+        inner join MedicoPaciente mp on d.idMedicoPaciente = mp.idMedicoPaciente
+	where mp.Paciente_idUsuarioPaciente = idUP;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `GenerarDieta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -864,21 +963,25 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarDieta`(idMP INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarDieta`(idU INT)
 BEGIN
 	DECLARE totalCalorias,totalFibra,totalColesterol,totalCarbohidratos,totalProteina,totalLipidos FLOAT;
-	DECLARE idRegimen INT;
+	DECLARE idRegimen,idMP INT;
     DECLARE CidPlatoF,CidPlatoE,CidPostre,CidBebida INT;
     DECLARE DidBebida,DidFruta,DidPlatoM INT;
     DECLARE AidPlatoL,AidBebida INT;
     DECLARE RidRefrigerioM,RidRefrigerioV INT;
     DECLARE sumCalorias,sumCaloriasDes,sumCaloriasCena,sumCaloriasRM,sumCaloriasRV FLOAT;
     
+    SELECT idMedicoPaciente
+		INTO @idMP
+        from MedicoPaciente where Paciente_idUsuarioPaciente = idU order by idMedicoPaciente desc limit 1;
+    
     SELECT idDieta,caloriasDieta
 		into @idRegimen,@totalCalorias
-        from Dieta where idMedicoPaciente = idMP order by idDieta desc limit 1 ;
+        from Dieta where idMedicoPaciente = @idMP order by idDieta desc limit 1 ;
 	
-   SELECT @idRegimen,@totalCalorias;
+--   SELECT @idRegimen,@totalCalorias;
    
 	CREATE TEMPORARY TABLE PlatoLigero (
 		idPlato INT PRIMARY KEY NOT NULL,
@@ -1019,8 +1122,6 @@ BEGIN
 	
     INSERT INTO AlimentoDieta VALUES (@AidBebida,4),(@AidPlatoL,4);
     
-	
-
 	SET @sumCalorias = @sumCalorias + @sumCaloriasCena;
     -- SELECT @totalCalorias,@sumCalorias;
     
@@ -1038,15 +1139,23 @@ BEGIN
     ORDER BY RAND() LIMIT 1 ;
 	
     SET @sumCalorias = @sumCalorias + @sumCaloriasRM + @sumCaloriasRV;
-	SELECT @totalCalorias,@sumCalorias;
+	-- SELECT @totalCalorias,@sumCalorias;
     INSERT INTO AlimentoDieta VALUES (@RidRefrigerioM,3),(@RidRefrigerioV,5);
 	
-    SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
+    /*SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
 		from AlimentoDieta ad inner join Alimento a on ad.idAlimento = a.idAlimento
     inner join Tiempo t on t.idTiempo = ad.Tiempo_idTiempo;
-
-	INSERT INTO AlimentosDieta (idAlimento,idDieta,Tiempo_idTiempo)
-		SELECT ad.idAlimento,@idRegimen,ad.Tiempo_idTiempo from AlimentoDieta ad;
+	*/
+	-- INSERT INTO AlimentosDieta (idAlimento,idDieta,Tiempo_idTiempo)
+	-- SELECT ad.idAlimento,@idRegimen,ad.Tiempo_idTiempo from AlimentoDieta ad;
+    
+    INSERT INTO DietasNoAprobadas
+		SELECT @idRegimen,NOW(),idAlimento,Tiempo_idTiempo
+	FROM AlimentoDieta;
+    
+    SELECT ad.idAlimento,a.nombre,@idRegimen,ad.Tiempo_idTiempo 
+		from AlimentoDieta ad
+	inner join Alimento a on a.idAlimento = ad.idAlimento order by ad.Tiempo asc; 
     
     
     drop table AlimentoDieta;
@@ -1075,7 +1184,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarRegimen`(idMP INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarRegimen`(idU INT)
 BEGIN
 	-- VALORES QUE SON REFERENCIA PARA ESTABLECER EL APORTE CALÓRICO REQUERIDO POR EL PACIENTE
     -- VALORES OBTENIDOS DEL ÚLTIMO REGISTRO DE SU PROGRESO.
@@ -1084,19 +1193,20 @@ BEGIN
     DECLARE edad,idIntensidad INT;
     DECLARE genero VARCHAR(45);
     DECLARE fechaReg DATETIME;
+    DECLARE idMP INT;
     DECLARE idDietaGen INT;
     -- CALL GenerarRegimen(2)
     SELECT u.sexo, TIMESTAMPDIFF(Year,u.fechaNacimiento,NOW()) 
 		INTO @genero,@edad
         from Usuario u inner join MedicoPaciente m on u.idUsuario = m.Paciente_idUsuarioPaciente
-        where m.idMedicoPaciente = idMP;
+        where u.idUsuario = idU;
 	-- SELECT @genero,@edad;
     SELECT p.altura,p.peso, i.idIntensidad 
 		INTO @altura,@peso,@idIntensidad
 		FROM Progreso p inner join Actividad a on p.idActividad = a.idActividad
      inner join ActividadIntensidad i on a.idIntensidad = i.idIntensidad
      inner join MedicoPaciente mp on mp.Paciente_idUsuarioPaciente = p.idUsuarioPaciente
-    where mp.idMedicoPaciente = idMP ORDER BY p.fechaRegistro DESC LIMIT 1;
+    where mp.Paciente_idUsuarioPaciente = idU ORDER BY p.fechaRegistro DESC LIMIT 1;
     -- SELECT @altura,@peso,@idIntensidad;
 	-- SELECT 'GENERANDO GEB Y ETA';
     SET @geb = ObtenerGastoEnergicoBasal(@peso,@altura,@edad,@genero);
@@ -1120,24 +1230,83 @@ BEGIN
     -- SELECT 'Gasto Total para el paciente' + @gastototal;
     SET @fechaReg = CURRENT_DATE();
     -- REGISTRA EL REGIMEN ACTUAL
-    INSERT INTO Dieta (idMedicoPaciente,fechaInicio,caloriasDieta) values (idMP,@fechaReg,@gastototal);
-	/* REGISTRA LA PORCIÓN EN GRAMOS DEL APORTE EN PROTEINAS, CARBOHIDRATOS Y LÍPIDOS DEACUERDO 
+    SELECT idMedicoPaciente
+		INTO @idMP
+		from MedicoPaciente
+		where Paciente_idUsuarioPaciente = idU ORDER by idMedicoPaciente DESC LIMIT 1;
+    
+    -- INSERT INTO Dieta (idMedicoPaciente,fechaInicio,caloriasDieta) values (@idMP,@fechaReg,@gastototal);
+	
+    /* REGISTRA LA PORCIÓN EN GRAMOS DEL APORTE EN PROTEINAS, CARBOHIDRATOS Y LÍPIDOS DEACUERDO 
 	A LAS PROPORCIONES INDICADAS POR LA NUTRIÓLOGA CONSULTADA Y LA REFERENCIA BIBLIOGRÁFICA */
     
-    SELECT idDieta 
+    /*SELECT d.idDieta 
 		INTO @idDietaGen
-		from Dieta where idMedicoPaciente = idMP AND fechaInicio = @fechaReg ORDER BY idDieta DESC LIMIT 1 ;
+		from Dieta d 
+        inner join MedicoPaciente mp on d.idMedicoPaciente = mp.idMedicoPaciente
+        where mp.Paciente_idUsuarioPaciente = idU AND d.fechaInicio = @fechaReg ORDER BY idDieta DESC LIMIT 1 ;
+    */
+    CREATE TEMPORARY TABLE RegimenTemporal(
+		idNutriente INT,gastoTotal float
+    );
     
-    select last_insert_id();
-    
-    INSERT INTO NutrientesDieta
-    VALUES (1,@idDietaGen,.15*@gastototal/4);
-    INSERT INTO NutrientesDieta values (2,@idDietaGen,@gastototal*.60/4);
-    INSERT INTO NutrientesDieta values (3,@idDietaGen,.20*@gastototal/9);
-    INSERT INTO NutrientesDieta values (5,@idDietaGen,@gastototal*.02);
+    INSERT INTO RegimenTemporal
+    VALUES (1,.15*@gastototal/4),(2,@gastototal*.60/4),
+		(3,.20*@gastototal/9),(5,@gastototal*.02)
+        ,(0,@gastoTotal);
     
     
+    SELECT * from RegimenTemporal;
     
+    DROP TABLE RegimenTemporal;
+    
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `RegistrarRegimen` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RegistrarRegimen`(idUsuario int, calorias float,
+	proteinas float,carbo float,lipidos float, fibra float)
+BEGIN
+	DECLARE idD,idUltimaDieta INT;
+    DECLARE idMP INT;
+    DECLARE fechaReg DATETIME;
+    
+    -- SELECCIONA EL ID DE MEDICO - PACIENTE
+    SELECT idMedicoPaciente
+		INTO @idMP
+		from MedicoPaciente where Paciente_idUsuarioPaciente = idUsuario
+	ORDER BY idMedicoPaciente DESC LIMIT 1;
+    SET @fechaReg = NOW();
+    SELECT idDieta 
+		INTO @idUltimaDieta
+	FROM Dieta d where idMedicoPaciente = @idMP ORDER BY idDieta DESC LIMIT 1;
+	
+    UPDATE Dieta set fechaFin = @fechaReg where idDieta = @idUltimaDieta;
+    
+    INSERT INTO Dieta (idMedicoPaciente,fechaInicio,caloriasDieta)
+		VALUES (@idMP,@fechaReg,calorias);
+        
+	SET @idD = last_insert_id();
+    
+    INSERT INTO NutrientesDieta (idNutriente,idDieta,cantidad)
+		VALUES 
+        (1,@idD,proteinas),
+        (2,@idD,carbo),
+        (3,@idD,lipidos),
+        (5,@idD,fibra);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1298,4 +1467,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-15 18:08:41
+-- Dump completed on 2015-07-18 22:57:55
