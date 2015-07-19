@@ -23,7 +23,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 		Usuario usuarioObj = null;
 
-		PreparedStatement prepStmt = con.builldPreparedStatement(insertUserSQL);
+		PreparedStatement prepStmt = con.buildPreparedStatement(insertUserSQL);
 		prepStmt.setString(1, usuario);
 		prepStmt.setString(2, nombre);
 		prepStmt.setString(3, apellidos);
@@ -105,7 +105,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	@Override
 	public int estaRegistrado(String id) throws SQLException{
 		String query ="select * from MedicoPaciente where Paciente_idUsuarioPaciente= ?";
-		PreparedStatement prepStmt = con.builldPreparedStatement(query);
+		PreparedStatement prepStmt = con.buildPreparedStatement(query);
 		prepStmt.setString(1, id);
 		ResultSet rs = prepStmt.executeQuery();
 		if(rs.next()){
@@ -117,7 +117,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM direccion as d INNER JOIN usuario as u on d.idDireccion=u.idUsuario "
 				+ " INNER JOIN TipoUsuario as t ON u.TipoUsuario_TipoUsuario=t.TipoUsuario  where u.correo= ?";
 		
-		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, usuario);
 
@@ -154,7 +154,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 				+ " INNER JOIN TipoUsuario as t ON u.idUsuario=t.TipoUsuario  where u.pass= ? ";
 		
 		
-		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, password);
 
@@ -192,7 +192,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String updateUserSQL = "UPDATE USUARIO SET nombre = ?, "
 				+ "apellidos = ?, correo = ?, password = ? WHERE usuario = ?";
 
-		PreparedStatement prepStmt = con.builldPreparedStatement(updateUserSQL);
+		PreparedStatement prepStmt = con.buildPreparedStatement(updateUserSQL);
 
 		prepStmt.setString(1, usuario.getNombre());
 		prepStmt.setString(2, usuario.getApellidos());
@@ -254,7 +254,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	public Usuario findByCorreo(String correo) throws SQLException {
 		String queryByUser = "SELECT * FROM USUARIO WHERE usuario.correo = ?";
 
-		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, correo);
 
@@ -390,7 +390,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String searchQuery = "SELECT * FROM USUARIO U INNER JOIN PACIENTE P ON U.IDUSUARIO = P.IDUSUARIOPACIENTE " 
 				+ "NATURAL JOIN ESTADOPACIENTE WHERE (nombre LIKE ? OR apellido LIKE ? OR correo LIKE ?) AND DESCESTADOPACIENTE = 'PreRegistro'";
 
-		PreparedStatement prepStmt = con.builldPreparedStatement(searchQuery);
+		PreparedStatement prepStmt = con.buildPreparedStatement(searchQuery);
 		ArrayList<Usuario> ls = new ArrayList<Usuario>();
 		
 		prepStmt.setString(1, "%" + q + "%");
@@ -417,7 +417,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	public Collection<Regimen> obtenerHistorialRegimen(int idMP)
 			throws SQLException {
 		String queryHistorial = "select d.idDieta, n.nombre,nd.cantidad from Dieta d inner join NutrientesDieta nd on d.idDieta = nd.idDieta inner join Nutrientes n on n.idNutrientes = nd.idNutriente where idMedicoPaciente = ? ORDER BY d.idDieta";
-		PreparedStatement prepStmt = con.builldPreparedStatement(queryHistorial);
+		PreparedStatement prepStmt = con.buildPreparedStatement(queryHistorial);
 		prepStmt.setInt(idMP, 1);
 		ResultSet rs = prepStmt.executeQuery();
 		Collection<Regimen> historial = null;
@@ -442,7 +442,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	public int obtenerIdMP(int idPaciente) throws SQLException {
 		String queryByUser = "select mp.idMedicoPaciente from medicoPaciente mp where mp.Paciente_idUsuarioPaciente = ?";
 
-		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
 
 		prepStmt.setInt(1, idPaciente);
 

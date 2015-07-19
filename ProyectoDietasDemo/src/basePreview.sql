@@ -890,6 +890,43 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CambiarAlimento`(idAli int,idReg int,fecha DATE)
+BEGIN
+  DECLARE categoria INT;
+    DECLARE aporte FLOAT;
+    DECLARE nuevoAlimento INT;
+    
+    SELECT Categoria_idCategoria
+    INTO @categoria
+  FROM AlimentoCategoria
+    WHERE Alimento_idAlimento = idAli;
+    
+    SELECT caloriasAlimento
+    INTO @aporte
+  FROM Alimento
+    WHERE idAlimento = idAli;
+        
+  SELECT a.idAlimento
+    INTO @nuevoAlimento
+  FROM Alimento a
+    inner join AlimentoCategoria ac
+    on ac.Alimento_idAlimento = a.idAlimento
+  WHERE ac.Categoria_idCategoria = @categoria
+    AND a.caloriasAlimento BETWEEN @aporte*.90 AND @aporte*1.05
+        AND a.idAlimento <> idAli
+    ORDER BY RAND() LIMIT 1;
+    
+    SELECT @nuevoAlimento,idAli,fecha,idReg;
+    
+    UPDATE DietasNoAprobadas 
+    SET idAlimento = @nuevoAlimento
+  where idAlimento = idAli
+     AND fechaRegistro = fecha
+        AND idRegimen = idReg;
+  
+    SELECT idAlimento,nombre from Alimento where idAlimento = @nuevoAlimento;
+END ;;
+DELIMITER ;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarDieta`(idD int)
 BEGIN
  SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
@@ -965,8 +1002,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarDieta`(idU INT)
 BEGIN
-	DECLARE totalCalorias,totalFibra,totalColesterol,totalCarbohidratos,totalProteina,totalLipidos FLOAT;
-	DECLARE idRegimen,idMP INT;
+  DECLARE totalCalorias,totalFibra,totalColesterol,totalCarbohidratos,totalProteina,totalLipidos FLOAT;
+  DECLARE idRegimen,idMP INT;
     DECLARE CidPlatoF,CidPlatoE,CidPostre,CidBebida INT;
     DECLARE DidBebida,DidFruta,DidPlatoM INT;
     DECLARE AidPlatoL,AidBebida INT;
@@ -974,60 +1011,60 @@ BEGIN
     DECLARE sumCalorias,sumCaloriasDes,sumCaloriasCena,sumCaloriasRM,sumCaloriasRV FLOAT;
     
     SELECT idMedicoPaciente
-		INTO @idMP
+    INTO @idMP
         from MedicoPaciente where Paciente_idUsuarioPaciente = idU order by idMedicoPaciente desc limit 1;
     
     SELECT idDieta,caloriasDieta
-		into @idRegimen,@totalCalorias
+    into @idRegimen,@totalCalorias
         from Dieta where idMedicoPaciente = @idMP order by idDieta desc limit 1 ;
-	
+  
 --   SELECT @idRegimen,@totalCalorias;
    
-	CREATE TEMPORARY TABLE PlatoLigero (
-		idPlato INT PRIMARY KEY NOT NULL,
+  CREATE TEMPORARY TABLE PlatoLigero (
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(500),
         calorias FLOAT,
         porcion FLOAT
     );
     
     CREATE TEMPORARY TABLE PlatoMedio (
-		idPlato INT PRIMARY KEY NOT NULL,
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(200),
         calorias FLOAT,
         porcion FLOAT
     );
     
     CREATE TEMPORARY TABLE PlatoFuertePersonalizado(
-		idPlato INT PRIMARY KEY NOT NULL,
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(200),
         calorias FLOAT,
         porcion FLOAT
     );
     
     CREATE TEMPORARY TABLE PlatoEntradaPersonalizado(
-		idPlato INT PRIMARY KEY NOT NULL,
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(200),
         calorias FLOAT,
         porcion FLOAT
     );
     
     CREATE TEMPORARY TABLE BebidasPersonalizado(
-		idPlato INT PRIMARY KEY NOT NULL,
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(200),
         calorias FLOAT,
         porcion FLOAT
     
-	);
+  );
     CREATE TEMPORARY TABLE PostrePersonalizado(
-		idPlato INT PRIMARY KEY NOT NULL,
+    idPlato INT PRIMARY KEY NOT NULL,
         nombre VARCHAR(200),
         calorias FLOAT,
         porcion FLOAT
     );
 
 
-	CREATE TEMPORARY TABLE ComidaPersonalizada (
-		idComida INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  CREATE TEMPORARY TABLE ComidaPersonalizada (
+    idComida INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         idBebida INT,
         idPlatoEntrada INT,
         idPlatoFuerte INT,
@@ -1037,32 +1074,32 @@ BEGIN
     
     
     CREATE TEMPORARY TABLE DesayunoPersonalizado (
-		idDesayuno INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    idDesayuno INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         idBebida INT,
         idPlatoMediano INT,
-		idFruta INT,
+    idFruta INT,
         sumaCalorias FLOAT
     );
     
     CREATE TEMPORARY TABLE CenaPersonalizada(
-		idCena INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    idCena INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         idBebida INT,
         idPlatoLigero INT,
         sumaCalorias FLOAT
     );
     
    CREATE TEMPORARY TABLE AlimentoDieta (
-		idAlimento int,Tiempo_idTiempo int
-	);
+    idAlimento int,Tiempo_idTiempo int
+  );
     
    
 -- PLATO FUERTE Y ENTRADA PARA LA COMIDA
-	
-	INSERT INTO PlatoFuertePersonalizado SELECT * from PlatoFuerte where caloriasPlatoFuerte BETWEEN @totalCalorias*.15 AND @totalCalorias*.20 ORDER BY RAND();
+  
+  INSERT INTO PlatoFuertePersonalizado SELECT * from PlatoFuerte where caloriasPlatoFuerte BETWEEN @totalCalorias*.15 AND @totalCalorias*.20 ORDER BY RAND() LIMIT 1000;
    -- SELECT * from PlatoFuertePersonalizado;
     
-    INSERT INTO PlatoEntradaPersonalizado SELECT * from PlatoEntrada where caloriasPlatoEntrada BETWEEN @totalCalorias*.10 AND @totalCalorias*.15 ORDER BY RAND();
-	-- SELECT * from PlatoEntradaPersonalizado;
+    INSERT INTO PlatoEntradaPersonalizado SELECT * from PlatoEntrada where caloriasPlatoEntrada BETWEEN @totalCalorias*.10 AND @totalCalorias*.15 ORDER BY RAND() LIMIT 1000;
+  -- SELECT * from PlatoEntradaPersonalizado;
     
 -- BEBIDAS PARA DESAYUNO,COMIDA Y CENA; POSTRE PARA COMIDA
     
@@ -1078,9 +1115,9 @@ BEGIN
     from PlatoFuertePersonalizado pf,PlatoEntradaPersonalizado pe,BebidasPersonalizado b,PostrePersonalizado p LIMIT 5000;
     
     SELECT idPlatoEntrada,idPlatoFuerte,idBebida,idPostre,calorias
-		INTO	@CidPlatoE,@CidPlatoF,@CidBebida,@CidPostre,@sumCalorias
-		from ComidaPersonalizada order by rand() limit 1;
-	
+    INTO  @CidPlatoE,@CidPlatoF,@CidBebida,@CidPostre,@sumCalorias
+    from ComidaPersonalizada order by rand() limit 1;
+  
     INSERT INTO AlimentoDieta VALUES (@CidPlatoE,2),(@CidPlatoF,2),(@CidBebida,2),(@CidPostre,2);
     -- SELECT * from AlimentoDieta;
     
@@ -1088,21 +1125,21 @@ BEGIN
 
     -- REGISTRA LOS PLATOS MEDIOS (PARA EL DESAYUNO) Y LOS PLATOS LIGEROS (Para la cena)
     
-    INSERT INTO PlatoLigero  SELECT * FROM PlatoEntrada where caloriasPlatoEntrada between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() ;
-	INSERT INTO PlatoLigero	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() ;
+    INSERT INTO PlatoLigero  SELECT * FROM PlatoEntrada where caloriasPlatoEntrada between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() LIMIT 500;
+  INSERT INTO PlatoLigero SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() LIMIT 500;
     -- SELECT * from PlatoLigero;
     
     
-	INSERT INTO PlatoMedio	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.12 AND @totalCalorias*.15;
+  INSERT INTO PlatoMedio  SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.12 AND @totalCalorias*.15 order by RAND() limit 500;
     -- SELECT * from PlatoMedio;
     
-	INSERT INTO DesayunoPersonalizado (idBebida,idPlatoMediano,idFruta,sumaCalorias)
+  INSERT INTO DesayunoPersonalizado (idBebida,idPlatoMediano,idFruta,sumaCalorias)
     SELECt b.idPlato,pm.idPlato,f.idAlimento,(pm.calorias + b.calorias + f.calorias)
-		from PlatoMedio pm,BebidasPersonalizado b,Fruta f ;
+    from PlatoMedio pm,BebidasPersonalizado b,Fruta f order by rand() LIMIT 800;
     
     SELECT idBebida,idPlatoMediano,idFruta,sumaCalorias
     INTO @DidBebida,@DidPlatoM,@DidFruta,@sumCaloriasDes
-	from DesayunoPersonalizado
+  from DesayunoPersonalizado
     where sumaCalorias
     BETWEEN @totalCalorias*.19 AND @totalCalorias*.28 order by rand() LIMIT 1;
     
@@ -1111,58 +1148,58 @@ BEGIN
     
     -- SELECT @totalCalorias,@sumCalorias;
 -- FIN DEL DESAYUNO
-	DELETE FROM BebidasPersonalizado where idPlato<=15000;
-    INSERT INTO BebidasPersonalizado SELECT * from Bebida where caloriasBebida <= @totalCalorias*.05 order by RAND() LIMIT 75;
+  DELETE FROM BebidasPersonalizado where idPlato<=15000;
+    INSERT INTO BebidasPersonalizado SELECT * from Bebida where caloriasBebida <= @totalCalorias*.05 order by RAND() LIMIT 200;
      INSERT INTO CenaPersonalizada(idBebida,idPlatoLigero,sumaCalorias) 
-		SELECT b.idPlato,pl.idPlato,(pl.calorias + b.calorias) FROM BebidasPersonalizado b,PlatoLigero pl LIMIT 4500;
-	 SELECT idBebida,idPlatoLigero,sumaCalorias
-		INTO @AidBebida,@AidPlatoL,@sumCaloriasCena
-		FROM CenaPersonalizada 
+    SELECT b.idPlato,pl.idPlato,(pl.calorias + b.calorias) FROM BebidasPersonalizado b,PlatoLigero pl LIMIT 4500;
+   SELECT idBebida,idPlatoLigero,sumaCalorias
+    INTO @AidBebida,@AidPlatoL,@sumCaloriasCena
+    FROM CenaPersonalizada 
      where sumaCalorias <= (@totalCalorias - @sumCalorias)/2 order by rand() limit 1 ;
-	
+  
     INSERT INTO AlimentoDieta VALUES (@AidBebida,4),(@AidPlatoL,4);
     
-	SET @sumCalorias = @sumCalorias + @sumCaloriasCena;
+  SET @sumCalorias = @sumCalorias + @sumCaloriasCena;
     -- SELECT @totalCalorias,@sumCalorias;
     
     
     SELECT idRefrigerio,caloriasRefrigerio
-		INTO @RidRefrigerioM,@sumCaloriasRM
+    INTO @RidRefrigerioM,@sumCaloriasRM
         from Refrigerio where caloriasRefrigerio 
-		BETWEEN (@totalCalorias-@sumCalorias)*.4 AND (@totalCalorias-@sumCalorias)*.6
+    BETWEEN (@totalCalorias-@sumCalorias)*.4 AND (@totalCalorias-@sumCalorias)*.6
     ORDER BY RAND() LIMIT 1 ;
     
     SELECT idRefrigerio,caloriasRefrigerio
-		INTO @RidRefrigerioV,@sumCaloriasRV
+    INTO @RidRefrigerioV,@sumCaloriasRV
         from Refrigerio where caloriasRefrigerio 
-		BETWEEN (@totalCalorias-@sumCalorias)*.4 AND (@totalCalorias-@sumCalorias)*.6
+    BETWEEN (@totalCalorias-@sumCalorias)*.4 AND (@totalCalorias-@sumCalorias)*.6
     ORDER BY RAND() LIMIT 1 ;
-	
+  
     SET @sumCalorias = @sumCalorias + @sumCaloriasRM + @sumCaloriasRV;
-	-- SELECT @totalCalorias,@sumCalorias;
+  -- SELECT @totalCalorias,@sumCalorias;
     INSERT INTO AlimentoDieta VALUES (@RidRefrigerioM,3),(@RidRefrigerioV,5);
-	
+  
     /*SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
-		from AlimentoDieta ad inner join Alimento a on ad.idAlimento = a.idAlimento
+    from AlimentoDieta ad inner join Alimento a on ad.idAlimento = a.idAlimento
     inner join Tiempo t on t.idTiempo = ad.Tiempo_idTiempo;
-	*/
-	-- INSERT INTO AlimentosDieta (idAlimento,idDieta,Tiempo_idTiempo)
-	-- SELECT ad.idAlimento,@idRegimen,ad.Tiempo_idTiempo from AlimentoDieta ad;
+  */
+  -- INSERT INTO AlimentosDieta (idAlimento,idDieta,Tiempo_idTiempo)
+  -- SELECT ad.idAlimento,@idRegimen,ad.Tiempo_idTiempo from AlimentoDieta ad;
     
     INSERT INTO DietasNoAprobadas
-		SELECT @idRegimen,NOW(),idAlimento,Tiempo_idTiempo
-	FROM AlimentoDieta;
+    SELECT @idRegimen,NOW(),idAlimento,Tiempo_idTiempo
+  FROM AlimentoDieta;
     
     SELECT ad.idAlimento,a.nombre,@idRegimen,ad.Tiempo_idTiempo 
-		from AlimentoDieta ad
-	inner join Alimento a on a.idAlimento = ad.idAlimento order by ad.Tiempo asc; 
+    from AlimentoDieta ad
+  inner join Alimento a on a.idAlimento = ad.idAlimento order by ad.Tiempo_idTiempo asc; 
     
     
     drop table AlimentoDieta;
     drop table PlatoMedio;
     drop table PlatoLigero;
     drop table PlatoFuertePersonalizado;
-	drop table PlatoEntradaPersonalizado;
+  drop table PlatoEntradaPersonalizado;
     drop table BebidasPersonalizado;
     drop table ComidaPersonalizada;
     drop table PostrePersonalizado;

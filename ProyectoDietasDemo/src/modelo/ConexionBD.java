@@ -94,7 +94,7 @@ public class ConexionBD {
 
    }
    
-   public PreparedStatement builldPreparedStatement(String query) throws SQLException {
+   public PreparedStatement buildPreparedStatement(String query) throws SQLException {
        PreparedStatement prepStmt = con.prepareStatement(query);
        return prepStmt;
    }
