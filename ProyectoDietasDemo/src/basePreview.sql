@@ -926,7 +926,7 @@ BEGIN
   
     SELECT idAlimento,nombre from Alimento where idAlimento = @nuevoAlimento;
 END ;;
-DELIMITER ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarDieta`(idD int)
 BEGIN
  SELECT a.idAlimento,a.nombre,t.idTiempo,t.descripcion 
