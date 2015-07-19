@@ -32,7 +32,6 @@ public class ProgresoDAO {
 				e.setImc(Float.parseFloat(rs.getString("imc")));
 				e.setIcc(Float.parseFloat(rs.getString("icc")));
 				progreso.add(e);
-				System.out.println("que pedo"+e.getPeso());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

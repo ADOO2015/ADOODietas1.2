@@ -5,6 +5,7 @@ public class Regimen {
 	private float carbohidratos;
 	private float lipidos;
 	private float fibra;
+	private float calorias;
 	
 	
 	public float getProteinas() {
@@ -30,6 +31,12 @@ public class Regimen {
 	}
 	public void setFibra(float fibra) {
 		this.fibra = fibra;
+	}
+	public float getCalorias() {
+		return calorias;
+	}
+	public void setCalorias(float calorias) {
+		this.calorias = calorias;
 	}
 	
 	

@@ -51,7 +51,7 @@ public class ConexionBD {
 
         String host = "localhost:3306";//cambiar por tu host de la base de datos
         String user = "root";//cambiar por tu usuario de la base de datos
-        String pass = "";//cambiar por tu contraseña de la base de datos
+        String pass = "123456";//cambiar por tu contraseña de la base de datos
         String dtbs = "dietas";//cambiar por tu nombre de la base de datos
 
         try { // preparamos la conexión
