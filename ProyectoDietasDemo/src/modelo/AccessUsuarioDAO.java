@@ -264,11 +264,11 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 		if (rs.next()) {
 			usuarioObj = new Usuario();
-			usuarioObj.setUsuario(rs.getString("usuario"));
+			usuarioObj.setId(rs.getString("idUsuario"));
 			usuarioObj.setNombre(rs.getString("nombre"));
-			usuarioObj.setApellidos(rs.getString("apellidos"));
+			usuarioObj.setApellidos(rs.getString("apellido"));
 			usuarioObj.setCorreo(rs.getString("correo"));
-			usuarioObj.setPassword(rs.getString("password"));
+			usuarioObj.setPassword(rs.getString("pass"));
 		}
 
 		return usuarioObj;
@@ -413,50 +413,6 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		return ls;
 	}
 
-	@Override
-	public Collection<Regimen> obtenerHistorialRegimen(int idMP)
-			throws SQLException {
-		String queryHistorial = "select d.idDieta, n.nombre,nd.cantidad from Dieta d inner join NutrientesDieta nd on d.idDieta = nd.idDieta inner join Nutrientes n on n.idNutrientes = nd.idNutriente where idMedicoPaciente = ? ORDER BY d.idDieta";
-		PreparedStatement prepStmt = con.buildPreparedStatement(queryHistorial);
-		prepStmt.setInt(idMP, 1);
-		ResultSet rs = prepStmt.executeQuery();
-		Collection<Regimen> historial = null;
-		int dietaId;
-		int aux;
-		
-		while(rs.next()) {
-			dietaId = rs.getInt("idDieta");
-			aux = dietaId;
-			Regimen regimen = new Regimen();
-			regimen.setProteinas(rs.getFloat("proteinas"));
-			regimen.setCarbohidratos(rs.getFloat("carbohidratos"));
-			regimen.setLipidos(rs.getFloat("lipidos"));
-			regimen.setFibra(rs.getFloat("fibra"));
-			historial.add(regimen);
-		}
-		
-		return historial;
-	}
-
-	@Override
-	public int obtenerIdMP(int idPaciente) throws SQLException {
-		String queryByUser = "select mp.idMedicoPaciente from medicoPaciente mp where mp.Paciente_idUsuarioPaciente = ?";
-
-		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
-
-		prepStmt.setInt(1, idPaciente);
-
-		ResultSet rs = prepStmt.executeQuery();
-
-		int idMp = -1;
-
-		if (rs.next()) {
-			idMp = rs.getInt("idMedicoPaciente");
-		}
-
-		return idMp;
-
-	}
 	public void updateUsuario(String idUsuario,String correo, String nombre, String apellido)
 			throws SQLException {
 			String updatetQuery;

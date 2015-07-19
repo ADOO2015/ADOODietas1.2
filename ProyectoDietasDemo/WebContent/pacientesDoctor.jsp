@@ -101,7 +101,7 @@
             <td>
             	<a href="#"><img src='img/iconos/Dieta.svg' id='icn'/></a>
             	<a href="#"><img id='icn' src='img/iconos/mensajes.svg'/></a>
-            	<a href="#"><img id='icn' src='img/iconos/historial.svg'/></a>
+            	<a href="historialRegimen?e=<%out.print(usuarios.get(i).getCorreo());%>"><img id='icn' src='img/iconos/historial.svg'/></a>
             	<a href="#"><img  id='icn' src='img/iconos/Progreso.svg'/></a>
             	<a href="#"><img src='img/iconos/perfil.svg' id='icn'/></a>
             	<a href="CitasNutriologo.jsp?idPac=<%out.print(usuarios.get(i).getId());%>"><img src='img/iconos/agenda.svg' id='icn'/></a>

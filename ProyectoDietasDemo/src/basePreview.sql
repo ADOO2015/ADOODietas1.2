@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `dietas` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `dietas`;
--- MySQL dump 10.13  Distrib 5.6.19, for linux-glibc2.5 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.19, for osx10.7 (i386)
 --
 -- Host: localhost    Database: dietas
 -- ------------------------------------------------------
--- Server version	5.5.43-0ubuntu0.14.10.1
+-- Server version	5.6.12
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -206,21 +204,6 @@ INSERT INTO `AlimentosDieta` VALUES (13,17,2),(24,17,2),(767,17,2),(6163,17,2),(
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `Bebida`
---
-
-DROP TABLE IF EXISTS `Bebida`;
-/*!50001 DROP VIEW IF EXISTS `Bebida`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Bebida` AS SELECT 
- 1 AS `idBebida`,
- 1 AS `nombreBebida`,
- 1 AS `caloriasBebida`,
- 1 AS `porcionBebida`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Table structure for table `Categoria`
 --
 
@@ -302,22 +285,6 @@ INSERT INTO `Citas` VALUES (1,1,'2015-07-08','12:00:00',NULL),(2,2,'2015-06-05',
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `Comida`
---
-
-DROP TABLE IF EXISTS `Comida`;
-/*!50001 DROP VIEW IF EXISTS `Comida`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Comida` AS SELECT 
- 1 AS `idBebida`,
- 1 AS `idPlatoEntrada`,
- 1 AS `idPlatoFuerte`,
- 1 AS `idPostre`,
- 1 AS `calorias`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Table structure for table `Consultorio`
 --
 
@@ -345,26 +312,6 @@ INSERT INTO `Consultorio` VALUES (11,1,'Clínica Angelus'),(12,2,'Consultorio Co
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `Desayuno`
---
-
-DROP TABLE IF EXISTS `Desayuno`;
-/*!50001 DROP VIEW IF EXISTS `Desayuno`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Desayuno` AS SELECT 
- 1 AS `idBebida`,
- 1 AS `nombreBebida`,
- 1 AS `caloriasBebida`,
- 1 AS `porcionBebida`,
- 1 AS `idPlatoEntrada`,
- 1 AS `nombrePlatoEntrada`,
- 1 AS `caloriasPlatoEntrada`,
- 1 AS `porcionPlatoEntrada`,
- 1 AS `calorias`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Table structure for table `Dieta`
 --
 
@@ -380,7 +327,7 @@ CREATE TABLE `Dieta` (
   PRIMARY KEY (`idDieta`),
   KEY `fk_Dieta_Paciente1_idx` (`idMedicoPaciente`),
   CONSTRAINT `fk_Dieta_MedicoPaciente` FOREIGN KEY (`idMedicoPaciente`) REFERENCES `MedicoPaciente` (`idMedicoPaciente`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +336,7 @@ CREATE TABLE `Dieta` (
 
 LOCK TABLES `Dieta` WRITE;
 /*!40000 ALTER TABLE `Dieta` DISABLE KEYS */;
-INSERT INTO `Dieta` VALUES (17,3,'2015-07-14','2015-07-18',2275.36),(19,3,'2015-07-18',NULL,2275.36);
+INSERT INTO `Dieta` VALUES (17,3,'2015-07-14','2015-07-18',2275.36),(19,3,'2015-07-18','2015-07-19',2275.36),(20,3,'2015-07-19',NULL,2275.36);
 /*!40000 ALTER TABLE `Dieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -470,20 +417,6 @@ LOCK TABLES `EstadoPaciente` WRITE;
 INSERT INTO `EstadoPaciente` VALUES (0,'PreRegistro'),(1,'Registrado');
 /*!40000 ALTER TABLE `EstadoPaciente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `Fruta`
---
-
-DROP TABLE IF EXISTS `Fruta`;
-/*!50001 DROP VIEW IF EXISTS `Fruta`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Fruta` AS SELECT 
- 1 AS `idAlimento`,
- 1 AS `nombre`,
- 1 AS `calorias`*/;
-SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `Medico`
@@ -593,7 +526,7 @@ CREATE TABLE `NutrientesDieta` (
 
 LOCK TABLES `NutrientesDieta` WRITE;
 /*!40000 ALTER TABLE `NutrientesDieta` DISABLE KEYS */;
-INSERT INTO `NutrientesDieta` VALUES (1,17,85.3261),(2,17,341.305),(3,17,50.5636),(5,17,45.5073),(1,19,85.3261),(2,19,341.305),(3,19,50.5636),(5,19,45.5073);
+INSERT INTO `NutrientesDieta` VALUES (1,17,85.3261),(2,17,341.305),(3,17,50.5636),(5,17,45.5073),(1,19,85.3261),(2,19,341.305),(3,19,50.5636),(5,19,45.5073),(1,20,85.3261),(2,20,341.305),(3,20,50.5636),(5,20,45.5073);
 /*!40000 ALTER TABLE `NutrientesDieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,51 +560,6 @@ LOCK TABLES `Paciente` WRITE;
 INSERT INTO `Paciente` VALUES (2,1,8),(3,0,7),(4,0,4),(5,1,5),(7,0,6);
 /*!40000 ALTER TABLE `Paciente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `PlatoEntrada`
---
-
-DROP TABLE IF EXISTS `PlatoEntrada`;
-/*!50001 DROP VIEW IF EXISTS `PlatoEntrada`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `PlatoEntrada` AS SELECT 
- 1 AS `idPlatoEntrada`,
- 1 AS `nombrePlatoEntrada`,
- 1 AS `caloriasPlatoEntrada`,
- 1 AS `porcionPlatoEntrada`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `PlatoFuerte`
---
-
-DROP TABLE IF EXISTS `PlatoFuerte`;
-/*!50001 DROP VIEW IF EXISTS `PlatoFuerte`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `PlatoFuerte` AS SELECT 
- 1 AS `idPlatoFuerte`,
- 1 AS `nombrePlatoFuerte`,
- 1 AS `caloriasPlatoFuerte`,
- 1 AS `porcionPlatoFuerte`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `Postre`
---
-
-DROP TABLE IF EXISTS `Postre`;
-/*!50001 DROP VIEW IF EXISTS `Postre`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Postre` AS SELECT 
- 1 AS `idPostre`,
- 1 AS `nombrePostre`,
- 1 AS `caloriasPostre`,
- 1 AS `porcionPostre`*/;
-SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `Progreso`
@@ -708,21 +596,6 @@ LOCK TABLES `Progreso` WRITE;
 INSERT INTO `Progreso` VALUES (1,2,'2015-07-13 23:52:16',167,69,75,80,0,NULL,1);
 /*!40000 ALTER TABLE `Progreso` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `Refrigerio`
---
-
-DROP TABLE IF EXISTS `Refrigerio`;
-/*!50001 DROP VIEW IF EXISTS `Refrigerio`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `Refrigerio` AS SELECT 
- 1 AS `idRefrigerio`,
- 1 AS `nombreRefrigerio`,
- 1 AS `caloriasRefrigerio`,
- 1 AS `porcionRefrigerio`*/;
-SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `Tiempo`
@@ -824,9 +697,134 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (1,'marlb.100@gmail.com','medico1234','Margarita','López Bustamante','Femenino',1,'0000-00-00 00:00:00'),(2,'alicia_03@hotmail.com','Au.1998','Alicia','Espitia Martínez','Femenino',2,'1994-12-07 00:00:00'),(3,'fer_moreno@gmail.com','ferMA-001','Fernando','Moreno Avilés','Masculino',1,'0000-00-00 00:00:00'),(4,'hernandez10@gmail.com','berenice19.0','Berenice ','Hernández López','Femenino',1,'0000-00-00 00:00:00'),(5,'kevin_mill@hotmail.com','kevin-system','Kevin','Popoca Ramírez','Masculino ',1,'0000-00-00 00:00:00'),(6,'alan.medico@gmail.com','universo.10','Alan','Valdivia Chávez','Masculino',2,'0000-00-00 00:00:00'),(7,'javier-perez@hotmail.com','jvrDVP.dieta','Javier','Del Valle Pérez','Masculino',1,'0000-00-00 00:00:00');
+INSERT INTO `Usuario` VALUES (1,'marlb.100@gmail.com','medico1234','Margarita','López Bustamante','Femenino',1,'1994-12-07 00:00:00'),(2,'alicia_03@hotmail.com','Au.1998','Alicia','Espitia Martínez','Femenino',1,'1994-12-07 00:00:00'),(3,'fer_moreno@gmail.com','ferMA-001','Fernando','Moreno Avilés','Masculino',1,'1994-12-07 00:00:00'),(4,'hernandez10@gmail.com','berenice19.0','Berenice ','Hernández López','Femenino',1,'1994-12-07 00:00:00'),(5,'kevin_mill@hotmail.com','kevin-system','Kevin','Popoca Ramírez','Masculino ',1,'1994-12-07 00:00:00'),(6,'alan.medico@gmail.com','universo.10','Alan','Valdivia Chávez','Masculino',2,'1994-12-07 00:00:00'),(7,'javier-perez@hotmail.com','jvrDVP.dieta','Javier','Del Valle Pérez','Masculino',1,'1994-12-07 00:00:00');
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `bebida`
+--
+
+DROP TABLE IF EXISTS `bebida`;
+/*!50001 DROP VIEW IF EXISTS `bebida`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `bebida` AS SELECT 
+ 1 AS `idBebida`,
+ 1 AS `nombreBebida`,
+ 1 AS `caloriasBebida`,
+ 1 AS `porcionBebida`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `comida`
+--
+
+DROP TABLE IF EXISTS `comida`;
+/*!50001 DROP VIEW IF EXISTS `comida`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `comida` AS SELECT 
+ 1 AS `idBebida`,
+ 1 AS `idPlatoEntrada`,
+ 1 AS `idPlatoFuerte`,
+ 1 AS `idPostre`,
+ 1 AS `calorias`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `desayuno`
+--
+
+DROP TABLE IF EXISTS `desayuno`;
+/*!50001 DROP VIEW IF EXISTS `desayuno`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `desayuno` AS SELECT 
+ 1 AS `idBebida`,
+ 1 AS `nombreBebida`,
+ 1 AS `caloriasBebida`,
+ 1 AS `porcionBebida`,
+ 1 AS `idPlatoEntrada`,
+ 1 AS `nombrePlatoEntrada`,
+ 1 AS `caloriasPlatoEntrada`,
+ 1 AS `porcionPlatoEntrada`,
+ 1 AS `calorias`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `fruta`
+--
+
+DROP TABLE IF EXISTS `fruta`;
+/*!50001 DROP VIEW IF EXISTS `fruta`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `fruta` AS SELECT 
+ 1 AS `idAlimento`,
+ 1 AS `nombre`,
+ 1 AS `calorias`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `platoentrada`
+--
+
+DROP TABLE IF EXISTS `platoentrada`;
+/*!50001 DROP VIEW IF EXISTS `platoentrada`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `platoentrada` AS SELECT 
+ 1 AS `idPlatoEntrada`,
+ 1 AS `nombrePlatoEntrada`,
+ 1 AS `caloriasPlatoEntrada`,
+ 1 AS `porcionPlatoEntrada`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `platofuerte`
+--
+
+DROP TABLE IF EXISTS `platofuerte`;
+/*!50001 DROP VIEW IF EXISTS `platofuerte`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `platofuerte` AS SELECT 
+ 1 AS `idPlatoFuerte`,
+ 1 AS `nombrePlatoFuerte`,
+ 1 AS `caloriasPlatoFuerte`,
+ 1 AS `porcionPlatoFuerte`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `postre`
+--
+
+DROP TABLE IF EXISTS `postre`;
+/*!50001 DROP VIEW IF EXISTS `postre`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `postre` AS SELECT 
+ 1 AS `idPostre`,
+ 1 AS `nombrePostre`,
+ 1 AS `caloriasPostre`,
+ 1 AS `porcionPostre`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `refrigerio`
+--
+
+DROP TABLE IF EXISTS `refrigerio`;
+/*!50001 DROP VIEW IF EXISTS `refrigerio`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `refrigerio` AS SELECT 
+ 1 AS `idRefrigerio`,
+ 1 AS `nombreRefrigerio`,
+ 1 AS `caloriasRefrigerio`,
+ 1 AS `porcionRefrigerio`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Dumping routines for database 'dietas'
@@ -880,7 +878,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ConsultarDieta` */;
+/*!50003 DROP PROCEDURE IF EXISTS `CambiarAlimento` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -926,6 +924,20 @@ BEGIN
   
     SELECT idAlimento,nombre from Alimento where idAlimento = @nuevoAlimento;
 END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarDieta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarDieta`(idD int)
 BEGIN
@@ -933,6 +945,29 @@ BEGIN
 		from AlimentosDieta ad inner join Alimento a on ad.idAlimento = a.idAlimento
     inner join Tiempo t on t.idTiempo = ad.Tiempo_idTiempo
 where ad.idDieta = idD;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarHistorialRegimen` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarHistorialRegimen`(idUP int)
+BEGIN
+SELECT n.nombre,nd.cantidad,d.fechaInicio,d.fechaFin FROM Dieta d 
+	INNER JOIN MedicoPaciente mp ON mp.idMedicoPaciente = d.idMedicoPaciente
+	INNER JOIN NutrientesDieta nd ON d.idDieta = nd.idDieta
+	INNER JOIN Nutrientes n ON n.idNutrientes = nd.idNutriente
+	WHERE mp.Paciente_idUsuarioPaciente = idUP AND d.idDieta != (SELECT MAX(idDieta) FROM Dieta) ORDER BY d.idDieta, n.nombre;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1352,10 +1387,10 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Final view structure for view `Bebida`
+-- Final view structure for view `bebida`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Bebida`*/;
+/*!50001 DROP VIEW IF EXISTS `bebida`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1364,16 +1399,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Bebida` AS (select `Alimento`.`idAlimento` AS `idBebida`,`Alimento`.`nombre` AS `nombreBebida`,`Alimento`.`caloriasAlimento` AS `caloriasBebida`,`Alimento`.`porcionAlimento` AS `porcionBebida` from `Alimento` where (`Alimento`.`idTipoAlimento` = 2)) */;
+/*!50001 VIEW `bebida` AS (select `alimento`.`idAlimento` AS `idBebida`,`alimento`.`nombre` AS `nombreBebida`,`alimento`.`caloriasAlimento` AS `caloriasBebida`,`alimento`.`porcionAlimento` AS `porcionBebida` from `alimento` where (`alimento`.`idTipoAlimento` = 2)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `Comida`
+-- Final view structure for view `comida`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Comida`*/;
+/*!50001 DROP VIEW IF EXISTS `comida`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1382,16 +1417,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Comida` AS (select `Bebida`.`idBebida` AS `idBebida`,`PlatoEntrada`.`idPlatoEntrada` AS `idPlatoEntrada`,`PlatoFuerte`.`idPlatoFuerte` AS `idPlatoFuerte`,`Postre`.`idPostre` AS `idPostre`,(((`PlatoFuerte`.`caloriasPlatoFuerte` + `PlatoEntrada`.`caloriasPlatoEntrada`) + `Postre`.`caloriasPostre`) + `Bebida`.`caloriasBebida`) AS `calorias` from (((`Bebida` join `PlatoEntrada`) join `PlatoFuerte`) join `Postre`)) */;
+/*!50001 VIEW `comida` AS (select `bebida`.`idBebida` AS `idBebida`,`platoentrada`.`idPlatoEntrada` AS `idPlatoEntrada`,`platofuerte`.`idPlatoFuerte` AS `idPlatoFuerte`,`postre`.`idPostre` AS `idPostre`,(((`platofuerte`.`caloriasPlatoFuerte` + `platoentrada`.`caloriasPlatoEntrada`) + `postre`.`caloriasPostre`) + `bebida`.`caloriasBebida`) AS `calorias` from (((`bebida` join `platoentrada`) join `platofuerte`) join `postre`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `Desayuno`
+-- Final view structure for view `desayuno`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Desayuno`*/;
+/*!50001 DROP VIEW IF EXISTS `desayuno`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1400,16 +1435,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Desayuno` AS (select `Bebida`.`idBebida` AS `idBebida`,`Bebida`.`nombreBebida` AS `nombreBebida`,`Bebida`.`caloriasBebida` AS `caloriasBebida`,`Bebida`.`porcionBebida` AS `porcionBebida`,`PlatoEntrada`.`idPlatoEntrada` AS `idPlatoEntrada`,`PlatoEntrada`.`nombrePlatoEntrada` AS `nombrePlatoEntrada`,`PlatoEntrada`.`caloriasPlatoEntrada` AS `caloriasPlatoEntrada`,`PlatoEntrada`.`porcionPlatoEntrada` AS `porcionPlatoEntrada`,(`PlatoEntrada`.`caloriasPlatoEntrada` + `Bebida`.`caloriasBebida`) AS `calorias` from (`Bebida` join `PlatoEntrada`)) */;
+/*!50001 VIEW `desayuno` AS (select `bebida`.`idBebida` AS `idBebida`,`bebida`.`nombreBebida` AS `nombreBebida`,`bebida`.`caloriasBebida` AS `caloriasBebida`,`bebida`.`porcionBebida` AS `porcionBebida`,`platoentrada`.`idPlatoEntrada` AS `idPlatoEntrada`,`platoentrada`.`nombrePlatoEntrada` AS `nombrePlatoEntrada`,`platoentrada`.`caloriasPlatoEntrada` AS `caloriasPlatoEntrada`,`platoentrada`.`porcionPlatoEntrada` AS `porcionPlatoEntrada`,(`platoentrada`.`caloriasPlatoEntrada` + `bebida`.`caloriasBebida`) AS `calorias` from (`bebida` join `platoentrada`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `Fruta`
+-- Final view structure for view `fruta`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Fruta`*/;
+/*!50001 DROP VIEW IF EXISTS `fruta`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1418,16 +1453,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Fruta` AS select `a`.`idAlimento` AS `idAlimento`,`a`.`nombre` AS `nombre`,`a`.`caloriasAlimento` AS `calorias` from (`Alimento` `a` join `AlimentoCategoria` `ac` on((`a`.`idAlimento` = `ac`.`Alimento_idAlimento`))) where (`ac`.`Categoria_idCategoria` = 7) */;
+/*!50001 VIEW `fruta` AS select `a`.`idAlimento` AS `idAlimento`,`a`.`nombre` AS `nombre`,`a`.`caloriasAlimento` AS `calorias` from (`alimento` `a` join `alimentocategoria` `ac` on((`a`.`idAlimento` = `ac`.`Alimento_idAlimento`))) where (`ac`.`Categoria_idCategoria` = 7) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `PlatoEntrada`
+-- Final view structure for view `platoentrada`
 --
 
-/*!50001 DROP VIEW IF EXISTS `PlatoEntrada`*/;
+/*!50001 DROP VIEW IF EXISTS `platoentrada`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1436,16 +1471,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `PlatoEntrada` AS (select `Alimento`.`idAlimento` AS `idPlatoEntrada`,`Alimento`.`nombre` AS `nombrePlatoEntrada`,`Alimento`.`caloriasAlimento` AS `caloriasPlatoEntrada`,`Alimento`.`porcionAlimento` AS `porcionPlatoEntrada` from `Alimento` where (`Alimento`.`idTipoAlimento` = 4)) */;
+/*!50001 VIEW `platoentrada` AS (select `alimento`.`idAlimento` AS `idPlatoEntrada`,`alimento`.`nombre` AS `nombrePlatoEntrada`,`alimento`.`caloriasAlimento` AS `caloriasPlatoEntrada`,`alimento`.`porcionAlimento` AS `porcionPlatoEntrada` from `alimento` where (`alimento`.`idTipoAlimento` = 4)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `PlatoFuerte`
+-- Final view structure for view `platofuerte`
 --
 
-/*!50001 DROP VIEW IF EXISTS `PlatoFuerte`*/;
+/*!50001 DROP VIEW IF EXISTS `platofuerte`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1454,16 +1489,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `PlatoFuerte` AS (select `Alimento`.`idAlimento` AS `idPlatoFuerte`,`Alimento`.`nombre` AS `nombrePlatoFuerte`,`Alimento`.`caloriasAlimento` AS `caloriasPlatoFuerte`,`Alimento`.`porcionAlimento` AS `porcionPlatoFuerte` from `Alimento` where (`Alimento`.`idTipoAlimento` = 1)) */;
+/*!50001 VIEW `platofuerte` AS (select `alimento`.`idAlimento` AS `idPlatoFuerte`,`alimento`.`nombre` AS `nombrePlatoFuerte`,`alimento`.`caloriasAlimento` AS `caloriasPlatoFuerte`,`alimento`.`porcionAlimento` AS `porcionPlatoFuerte` from `alimento` where (`alimento`.`idTipoAlimento` = 1)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `Postre`
+-- Final view structure for view `postre`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Postre`*/;
+/*!50001 DROP VIEW IF EXISTS `postre`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1472,16 +1507,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Postre` AS (select `Alimento`.`idAlimento` AS `idPostre`,`Alimento`.`nombre` AS `nombrePostre`,`Alimento`.`caloriasAlimento` AS `caloriasPostre`,`Alimento`.`porcionAlimento` AS `porcionPostre` from `Alimento` where (`Alimento`.`idTipoAlimento` = 5)) */;
+/*!50001 VIEW `postre` AS (select `alimento`.`idAlimento` AS `idPostre`,`alimento`.`nombre` AS `nombrePostre`,`alimento`.`caloriasAlimento` AS `caloriasPostre`,`alimento`.`porcionAlimento` AS `porcionPostre` from `alimento` where (`alimento`.`idTipoAlimento` = 5)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `Refrigerio`
+-- Final view structure for view `refrigerio`
 --
 
-/*!50001 DROP VIEW IF EXISTS `Refrigerio`*/;
+/*!50001 DROP VIEW IF EXISTS `refrigerio`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -1490,7 +1525,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `Refrigerio` AS (select `Alimento`.`idAlimento` AS `idRefrigerio`,`Alimento`.`nombre` AS `nombreRefrigerio`,`Alimento`.`caloriasAlimento` AS `caloriasRefrigerio`,`Alimento`.`porcionAlimento` AS `porcionRefrigerio` from `Alimento` where (`Alimento`.`idTipoAlimento` = 3)) */;
+/*!50001 VIEW `refrigerio` AS (select `alimento`.`idAlimento` AS `idRefrigerio`,`alimento`.`nombre` AS `nombreRefrigerio`,`alimento`.`caloriasAlimento` AS `caloriasRefrigerio`,`alimento`.`porcionAlimento` AS `porcionRefrigerio` from `alimento` where (`alimento`.`idTipoAlimento` = 3)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1504,4 +1539,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-18 22:57:55
+-- Dump completed on 2015-07-19 18:49:26

@@ -40,10 +40,7 @@ public interface UsuarioDAO {
 
 	int estaRegistrado(String id) throws SQLException;
 	
-	int obtenerIdMP(int idPaciente) throws SQLException;
-	
-	public Collection<Regimen> obtenerHistorialRegimen(int idMP) throws SQLException;
-public String getApellido(String correo) throws SQLException;
+	public String getApellido(String correo) throws SQLException;
 	
 	public String getNombre(String correo) throws SQLException;
 	
