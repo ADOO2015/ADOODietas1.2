@@ -15,13 +15,8 @@
     	Usuario user;
     %>
     <%
-    user = (Usuario) session.getAttribute("Usuario");
-    %>
-    <%HttpSession sesion = request.getSession();
-    	Usuario a = new Usuario();
-    	a = (Usuario)sesion.getAttribute("Usuario");
-    	String nombre = a.getNombre();
-    
+    	user = (Usuario) session.getAttribute("Usuario");
+    	String nombre = user.getNombre();
     	AccessUsuarioDAO pacientes = new AccessUsuarioDAO();
     	ArrayList<Usuario> usuarios = (ArrayList<Usuario>)pacientes.findByMedico(user.getId());    	
     %> 

@@ -455,6 +455,17 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		
 	}
 	
+	//tlatisnere 19/07/2015: Se agrega método para crear relacion medicopaciente.
+	
+	public void insertInMedicoPaciente(String idUsuarioPaciente, String idUsuarioMedico) throws SQLException {
+		String query = "INSERT INTO medicopaciente() VALUES(" + idUsuarioPaciente + ", " + idUsuarioMedico + ", NOW(), NULL," + idUsuarioMedico + ");";
+		try {
+			con.execute(query);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+	
 	@Override
 	public String getNombre(String correo) throws SQLException {
 		String query="SELECT nombre from Usuario where correo='"+correo+"'";
@@ -484,4 +495,5 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		id=res.getString("apellido");
 		return id;
 	}
+	
 }
