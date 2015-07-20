@@ -120,7 +120,7 @@
                 <div class="panel-body">
                   <div class="list-group">
                    
-                    <a href="#" class="list-group-item"><img src="img/iconos/Dieta.svg" id="icn"/> Dieta
+                    <a href="GeneraDieta.jsp" class="list-group-item"><img src="img/iconos/Dieta.svg" id="icn"/> Dieta
                     </a>
                     <a href="MiProgreso" class="list-group-item"><img src="img/iconos/Progreso.svg" id="icn"/> Progreso
                     </a>

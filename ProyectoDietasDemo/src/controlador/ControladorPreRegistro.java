@@ -41,7 +41,6 @@ public class ControladorPreRegistro extends HttpServlet {
 		String apellidos="";
 		String TipoUsuario="1";
 		String sexo="";
-		String fecha="";
 	
 		
 		//para tabla direccion
@@ -61,10 +60,6 @@ public class ControladorPreRegistro extends HttpServlet {
 		numeroExt=request.getParameter("numeroExt");
 		delMun=request.getParameter("ciudad");
 		sexo=request.getParameter("sexo");
-		fecha=request.getParameter("fecha");
-		//recibe 1994-12-04, necesitamos 1994-12-07 00:00:00
-		fecha+=" 00:00:00";
-		//System.out.println("Nacimiento: "+fecha);
 		AccessUsuarioDAO gestor=new AccessUsuarioDAO();
 		String us="";
 		
@@ -80,7 +75,7 @@ public class ControladorPreRegistro extends HttpServlet {
 		try {
 
 			//registramos en tabla Usuario
-			gestor.insertinUsuario(nombre, apellidos, correo, contrasena,sexo,TipoUsuario,fecha);
+			gestor.insertinUsuario(nombre, apellidos, correo, contrasena,sexo,TipoUsuario);
 			//registramos en tabla direccion
 			gestor.insertinDireccion(delMun, calle, numeroExt);
 			String idDireccion=gestor.selectLastID();

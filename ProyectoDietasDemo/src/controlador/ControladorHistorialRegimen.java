@@ -2,9 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.DAOFactoria;
-import modelo.RegimenDAO;
 import modelo.UsuarioDAO;
-import pojos.Regimen;
 import pojos.Usuario;
 
 /**
@@ -38,29 +34,18 @@ public class ControladorHistorialRegimen extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String correoPaciente = request.getParameter("e");
 		Usuario usuario = (Usuario) session.getAttribute("Usuario");
 		
 		if (usuario != null) {
-			
-			if (correoPaciente != null) {
-				RegimenDAO regDAO = new RegimenDAO();
-				DAOFactoria fact = DAOFactoria.getDAOFactoria(1);
-				UsuarioDAO usuarioDAO = fact.getUsuarioDAO();
-				RequestDispatcher view = request.getRequestDispatcher("historialRegimen.jsp");
-				
-				try {
-					Usuario paciente = usuarioDAO.findByCorreo(correoPaciente);
-					ArrayList<Regimen> historial = (ArrayList<Regimen>) regDAO.obtenerHistorialRegimen(paciente);
-					request.setAttribute("historial", historial);
-					view.forward(request, response);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-				
-			}
-			else {
-				response.sendRedirect("pacientesDoctor.jsp");
+			System.out.println(usuario.getId());
+			System.out.println(usuario.getNombre());
+			DAOFactoria fact = DAOFactoria.getDAOFactoria(1);
+			UsuarioDAO usuarioDAO = fact.getUsuarioDAO();
+			try {
+				int idMP = usuarioDAO.obtenerIdMP(Integer.parseInt(usuario.getId()));
+			} catch (NumberFormatException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		else {

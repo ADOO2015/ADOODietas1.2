@@ -6,9 +6,14 @@ public class Regimen {
 	private float lipidos;
 	private float fibra;
 	private float calorias;
-	private String fechaInicio;
-	private String fechaFin;
 	
+	public Regimen(){
+		proteinas = 0;
+		carbohidratos = 0;
+		lipidos = 0;
+		fibra = 0 ;
+		calorias =0;
+	}
 	public float getProteinas() {
 		return proteinas;
 	}
@@ -39,16 +44,6 @@ public class Regimen {
 	public void setCalorias(float calorias) {
 		this.calorias = calorias;
 	}
-	public String getFechaInicio() {
-		return fechaInicio;
-	}
-	public void setFechaInicio(String fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-	public String getFechaFin() {
-		return fechaFin;
-	}
-	public void setFechaFin(String fechaFin) {
-		this.fechaFin = fechaFin;
-	}
+	
+	
 }

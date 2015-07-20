@@ -31,9 +31,7 @@
     	String nombre = a.getNombre();%>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="pacienteLayout.jsp">Inicio <span class="sr-only">(current)</span></a></li>
-		<li ><a href="#">Contacto</a></li>
-        <li><a href="#">Mas de nosotros</a></li>
+       
       </ul>
       <ul class="nav navbar-nav navbar-right">
               <li><h3><%=nombre%></h3></li>
@@ -45,35 +43,55 @@
   </div>
 </nav>
 
-
-<div class="container">
-
-		
-<center>
-		<div class="row">
-			<div class="col-md-12">
-			
-								<h1>Historial de Progreso</h1>
-				<div style="width:50%">
-					<div>
-						<canvas id="canvas" height="450" width="600"></canvas>
-					</div>
-				</div>
-			
-				
+        <div class="container">
+            <div class="row">
+         <div class="col-lg-3">
+            
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3> <%
+                   	
+                    out.println(nombre);
+                    %></h3>
+                    
+                </div>
+                <div class="panel-body">
+                  <div class="list-group">
+                   
+                    <a href="#" class="list-group-item"><img src="img/iconos/Dieta.svg" id="icn"/> Dieta
+                    </a>
+                    <a href="MiProgreso" class="list-group-item"><img src="img/iconos/Progreso.svg" id="icn"/> Progreso
+                    </a>
+                    </a>
+                    <a href="historialRegimen" class="list-group-item"><img src="img/iconos/historial.svg" id="icn"/> Historial
+                    </a>
+                    </a>
+                    <a href="#" class="list-group-item"><img src="img/iconos/agenda.svg" id="icn"/> Agenda
+                    </a>
+                    </a>
+                    <a href="#" class="list-group-item"><img src="img/iconos/mensajes.svg" id="icn"/> Mensajes
+                    </a>
+                    </a>
+                    <a href="#" class="list-group-item"><img src="img/iconos/perfil.svg" id="icn"/> Perfil
+                    </a>
+                </div>
+            </div>
+           
 			</div>
-			
-			
-			
-			
-			<br/><br/>
-			
-			
-			
-			
-			<div class="col-md-12">
-			
-			
+      
+		</div>
+		<div class="row">	
+             <div class="col-lg-8">
+							<div class="col-md-12">			
+								<h1>Historial de Progreso</h1>
+				<div style="width:50%" class="center-block">
+					
+						<canvas id="canvas" height="450" width="600"></canvas>
+					
+				</div>				
+			</div>			
+			<br/><br/>			
+			<div class="col-md-12">			
 			<h1>Actualiza tu progreso</h1>
 			
 				<form class="form-horizontal" action="MiProgreso" method="post">
@@ -86,10 +104,6 @@
 						   <input class="form-control" id="cintura" placeholder="Cintura" type="text" name="cintura" required>
 					  </div>
 					</div>
-					
-					
-				   
-					
 					<div class="form-group">
 					  <div class="col-lg-10 col-lg-offset-2">
 						<button type="submit" class="btn btn-primary">Actualizar Progreso</button>
@@ -97,17 +111,14 @@
 					</div>
 				  </fieldset>
 				</form>
-				</div>
+				</div>		
+             
 			</div>
-			
-			
-			
-			
-			
-</div></center>
 
-
-
+		</div>
+            </div>
+            
+        </div>
 <div class="container" style="margin-top:100px;background:#213029;color:#FFF;width:100%;">
 
 		<div class="row">

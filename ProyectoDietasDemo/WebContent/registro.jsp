@@ -61,7 +61,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="confirmacionPacientes.jsp">Inicio <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="#">Inicio <span class="sr-only">(current)</span></a></li>
 		<li ><a href="#">Contacto</a></li>
         <li><a href="#">Mas de nosotros</a></li>
         
@@ -78,7 +78,7 @@
 		
 
 		<div class="jumbotron">
-<form class="form-horizontal" action="ControladorRegistro" method = "post">
+<form class="form-horizontal" action="ControladorRegistro">
   <fieldset>
     <legend>Formulario - Registro</legend>
     <div class="form-group">

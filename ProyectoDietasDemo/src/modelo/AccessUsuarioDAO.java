@@ -23,7 +23,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 		Usuario usuarioObj = null;
 
-		PreparedStatement prepStmt = con.buildPreparedStatement(insertUserSQL);
+		PreparedStatement prepStmt = con.builldPreparedStatement(insertUserSQL);
 		prepStmt.setString(1, usuario);
 		prepStmt.setString(2, nombre);
 		prepStmt.setString(3, apellidos);
@@ -105,7 +105,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	@Override
 	public int estaRegistrado(String id) throws SQLException{
 		String query ="select * from MedicoPaciente where Paciente_idUsuarioPaciente= ?";
-		PreparedStatement prepStmt = con.buildPreparedStatement(query);
+		PreparedStatement prepStmt = con.builldPreparedStatement(query);
 		prepStmt.setString(1, id);
 		ResultSet rs = prepStmt.executeQuery();
 		if(rs.next()){
@@ -117,7 +117,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM direccion as d INNER JOIN usuario as u on d.idDireccion=u.idUsuario "
 				+ " INNER JOIN TipoUsuario as t ON u.TipoUsuario_TipoUsuario=t.TipoUsuario  where u.correo= ?";
 		
-		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, usuario);
 
@@ -154,7 +154,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 				+ " INNER JOIN TipoUsuario as t ON u.idUsuario=t.TipoUsuario  where u.pass= ? ";
 		
 		
-		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, password);
 
@@ -192,7 +192,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String updateUserSQL = "UPDATE USUARIO SET nombre = ?, "
 				+ "apellidos = ?, correo = ?, password = ? WHERE usuario = ?";
 
-		PreparedStatement prepStmt = con.buildPreparedStatement(updateUserSQL);
+		PreparedStatement prepStmt = con.builldPreparedStatement(updateUserSQL);
 
 		prepStmt.setString(1, usuario.getNombre());
 		prepStmt.setString(2, usuario.getApellidos());
@@ -254,7 +254,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	public Usuario findByCorreo(String correo) throws SQLException {
 		String queryByUser = "SELECT * FROM USUARIO WHERE usuario.correo = ?";
 
-		PreparedStatement prepStmt = con.buildPreparedStatement(queryByUser);
+		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
 
 		prepStmt.setString(1, correo);
 
@@ -264,11 +264,11 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 		if (rs.next()) {
 			usuarioObj = new Usuario();
-			usuarioObj.setId(rs.getString("idUsuario"));
+			usuarioObj.setUsuario(rs.getString("usuario"));
 			usuarioObj.setNombre(rs.getString("nombre"));
-			usuarioObj.setApellidos(rs.getString("apellido"));
+			usuarioObj.setApellidos(rs.getString("apellidos"));
 			usuarioObj.setCorreo(rs.getString("correo"));
-			usuarioObj.setPassword(rs.getString("pass"));
+			usuarioObj.setPassword(rs.getString("password"));
 		}
 
 		return usuarioObj;
@@ -346,11 +346,11 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public void insertinUsuario(String nombre, String apellidos, String correo,
-			String password, String sexo, String TipoUsuario,String fecha)
+			String password, String sexo, String TipoUsuario)
 			throws SQLException {
 		String insertQuery = "INSERT INTO Usuario"
-				+ "(nombre, apellido, correo, pass,sexo,TipoUsuario_TipoUsuario,fechaNacimiento) VALUES"
-				+ "('"+nombre+"','"+apellidos+"','"+correo+"','"+password+"','"+sexo+"',"+TipoUsuario+",'"+fecha+"')";
+				+ "(nombre, apellido, correo, pass,sexo,TipoUsuario_TipoUsuario) VALUES"
+				+ "('"+nombre+"','"+apellidos+"','"+correo+"','"+password+"','"+sexo+"',"+TipoUsuario+")";
 		con.insert(insertQuery);
 		
 	}
@@ -390,7 +390,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		String searchQuery = "SELECT * FROM USUARIO U INNER JOIN PACIENTE P ON U.IDUSUARIO = P.IDUSUARIOPACIENTE " 
 				+ "NATURAL JOIN ESTADOPACIENTE WHERE (nombre LIKE ? OR apellido LIKE ? OR correo LIKE ?) AND DESCESTADOPACIENTE = 'PreRegistro'";
 
-		PreparedStatement prepStmt = con.buildPreparedStatement(searchQuery);
+		PreparedStatement prepStmt = con.builldPreparedStatement(searchQuery);
 		ArrayList<Usuario> ls = new ArrayList<Usuario>();
 		
 		prepStmt.setString(1, "%" + q + "%");
@@ -413,6 +413,50 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		return ls;
 	}
 
+	@Override
+	public Collection<Regimen> obtenerHistorialRegimen(int idMP)
+			throws SQLException {
+		String queryHistorial = "select d.idDieta, n.nombre,nd.cantidad from Dieta d inner join NutrientesDieta nd on d.idDieta = nd.idDieta inner join Nutrientes n on n.idNutrientes = nd.idNutriente where idMedicoPaciente = ? ORDER BY d.idDieta";
+		PreparedStatement prepStmt = con.builldPreparedStatement(queryHistorial);
+		prepStmt.setInt(idMP, 1);
+		ResultSet rs = prepStmt.executeQuery();
+		Collection<Regimen> historial = null;
+		int dietaId;
+		int aux;
+		
+		while(rs.next()) {
+			dietaId = rs.getInt("idDieta");
+			aux = dietaId;
+			Regimen regimen = new Regimen();
+			regimen.setProteinas(rs.getFloat("proteinas"));
+			regimen.setCarbohidratos(rs.getFloat("carbohidratos"));
+			regimen.setLipidos(rs.getFloat("lipidos"));
+			regimen.setFibra(rs.getFloat("fibra"));
+			historial.add(regimen);
+		}
+		
+		return historial;
+	}
+
+	@Override
+	public int obtenerIdMP(int idPaciente) throws SQLException {
+		String queryByUser = "select mp.idMedicoPaciente from medicoPaciente mp where mp.Paciente_idUsuarioPaciente = ?";
+
+		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
+
+		prepStmt.setInt(1, idPaciente);
+
+		ResultSet rs = prepStmt.executeQuery();
+
+		int idMp = -1;
+
+		if (rs.next()) {
+			idMp = rs.getInt("idMedicoPaciente");
+		}
+
+		return idMp;
+
+	}
 	public void updateUsuario(String idUsuario,String correo, String nombre, String apellido)
 			throws SQLException {
 			String updatetQuery;
@@ -455,17 +499,6 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		
 	}
 	
-	//tlatisnere 19/07/2015: Se agrega método para crear relacion medicopaciente.
-	
-	public void insertInMedicoPaciente(String idUsuarioPaciente, String idUsuarioMedico) throws SQLException {
-		String query = "INSERT INTO medicopaciente() VALUES(" + idUsuarioPaciente + ", " + idUsuarioMedico + ", NOW(), NULL," + idUsuarioMedico + ");";
-		try {
-			con.execute(query);
-		} catch (SQLException e) {
-			throw e;
-		}
-	}
-	
 	@Override
 	public String getNombre(String correo) throws SQLException {
 		String query="SELECT nombre from Usuario where correo='"+correo+"'";
@@ -495,5 +528,4 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 		id=res.getString("apellido");
 		return id;
 	}
-	
 }

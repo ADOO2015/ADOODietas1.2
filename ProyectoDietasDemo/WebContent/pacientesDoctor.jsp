@@ -15,8 +15,13 @@
     	Usuario user;
     %>
     <%
-    	user = (Usuario) session.getAttribute("Usuario");
-    	String nombre = user.getNombre();
+    user = (Usuario) session.getAttribute("Usuario");
+    %>
+    <%HttpSession sesion = request.getSession();
+    	Usuario a = new Usuario();
+    	a = (Usuario)sesion.getAttribute("Usuario");
+    	String nombre = a.getNombre();
+    
     	AccessUsuarioDAO pacientes = new AccessUsuarioDAO();
     	ArrayList<Usuario> usuarios = (ArrayList<Usuario>)pacientes.findByMedico(user.getId());    	
     %> 
@@ -56,30 +61,32 @@
     <div class="row">
         <div class="col-lg-3">
             
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><%="#USUARIO"%></h3>
-                </div>
-                <div class="panel-body">
-                  <div class="list-group">
-                    <a href="#" class="list-group-item acve">
-                        <img src="img/iconos/pacientes.svg" id="icn"/> Pacientes
-                    </a>
-                    <a href="#" class="list-group-item"><img src="img/iconos/agenda.svg" id="icn"/> Agenda
-                    </a>
-                    <a href="confirmacionPacientes" class="list-group-item"><img src="img/iconos/registro.svg" id="icn"/> Registro de pacientes
-                    </a>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="input-group">                              
-                    <input type="text" class="form-control" placeholder="Buscar...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Buscar</button>
-                  </span>
-              </div>
-          </div>
-      </div>
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title"><%="#USUARIO"%></h3>
+					</div>
+					<div class="panel-body">
+						<div class="list-group">
+							<a href="pacientesDoctor.jsp" class="list-group-item acve"> <img
+								src="img/iconos/pacientes.svg" id="icn" /> Pacientes
+							</a> <a href="#" class="list-group-item"><img
+								src="img/iconos/agenda.svg" id="icn" /> Agenda </a> <a
+								href="confirmacionPacientes" class="list-group-item"><img
+								src="img/iconos/registro.svg" id="icn" /> Registro de pacientes
+							</a>
+						</div>
+					</div>
+					<div class="panel-body">
+						<form action="confirmacionPacientes" method="get">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Buscar..."
+									name="q" id="q" value="${q}"> <span class="input-group-btn">
+									<input class="btn btn-default" type="submit" value="Buscar">
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
       
   </div>
   <div class="col-md-8">
@@ -94,9 +101,9 @@
             <td><h4> Nombre: <%out.print(usuarios.get(i).getNombre());%></h4>
             <h4> Apellidos: <%out.print(usuarios.get(i).getApellidos());%></h4></td>
             <td>
-            	<a href="#"><img src='img/iconos/Dieta.svg' id='icn'/></a>
+            	<a href="RegimenPaciente.jsp?idPac=<%out.print(usuarios.get(i).getId());%>&gen=N"><img src='img/iconos/Dieta.svg' id='icn'/></a>
             	<a href="#"><img id='icn' src='img/iconos/mensajes.svg'/></a>
-            	<a href="historialRegimen?e=<%out.print(usuarios.get(i).getCorreo());%>"><img id='icn' src='img/iconos/historial.svg'/></a>
+            	<a href="#"><img id='icn' src='img/iconos/historial.svg'/></a>
             	<a href="#"><img  id='icn' src='img/iconos/Progreso.svg'/></a>
             	<a href="#"><img src='img/iconos/perfil.svg' id='icn'/></a>
             	<a href="CitasNutriologo.jsp?idPac=<%out.print(usuarios.get(i).getId());%>"><img src='img/iconos/agenda.svg' id='icn'/></a>
