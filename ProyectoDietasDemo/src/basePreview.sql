@@ -201,7 +201,7 @@ CREATE TABLE `AlimentosDieta` (
 
 LOCK TABLES `AlimentosDieta` WRITE;
 /*!40000 ALTER TABLE `AlimentosDieta` DISABLE KEYS */;
-INSERT INTO `AlimentosDieta` VALUES (13,17,2),(24,17,2),(767,17,2),(6163,17,2),(755,17,1),(230,17,1),(2624,17,1),(636,17,4),(128,17,4),(2424,17,3),(2457,17,5);
+INSERT INTO `AlimentosDieta` VALUES (13,17,2),(24,17,2),(767,17,2),(6163,17,2),(755,17,1),(230,17,1),(2624,17,1),(636,17,4),(128,17,4),(2424,17,3),(2457,17,5),(2105,19,2),(27,19,2),(5972,19,2),(1304,19,2),(752,19,1),(5459,19,1),(2739,19,1),(800,19,4),(90,19,4),(2324,19,3),(2415,19,5),(2105,19,2),(24,19,2),(1186,19,2),(2007,19,2),(5954,19,1),(5515,19,1),(2609,19,1),(1003,19,4),(34,19,4),(2472,19,3),(2020,19,5),(2105,19,2),(27,19,2),(4593,19,2),(6160,19,2),(925,19,1),(2954,19,1),(2673,19,1),(812,19,4),(12,19,4),(5113,19,3),(4181,19,5),(15,19,2),(24,19,2),(4519,19,2),(1300,19,2),(1117,19,1),(1257,19,1),(2112,19,1),(1108,19,4),(81,19,4),(2029,19,3),(2020,19,5),(2105,19,2),(27,19,2),(5944,19,2),(6161,19,2),(1153,19,1),(2971,19,1),(2709,19,1),(1027,19,4),(74,19,4),(2339,19,3),(2757,19,5),(2105,19,2),(27,19,2),(5998,19,2),(1300,19,2),(778,19,1),(3326,19,1),(2665,19,1),(1009,19,4),(68,19,4),(2424,19,3),(2451,19,5),(2105,19,2),(27,19,2),(805,19,2),(1810,19,2),(830,19,1),(5527,19,1),(2492,19,1),(805,19,4),(252,19,4),(2020,19,3),(2355,19,5),(13,19,2),(27,19,2),(624,19,2),(2010,19,2),(940,19,1),(3522,19,1),(2380,19,1),(1021,19,4),(92,19,4),(4119,19,3),(2543,19,5),(13,19,2),(24,19,2),(689,19,2),(2544,19,2),(4583,19,1),(1329,19,1),(2624,19,1),(4329,19,4),(34,19,4),(4141,19,3),(4141,19,5);
 /*!40000 ALTER TABLE `AlimentosDieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +280,7 @@ DROP TABLE IF EXISTS `Citas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Citas` (
-  `idCita` int(11) NOT NULL,
+  `idCita` int(11) NOT NULL AUTO_INCREMENT,
   `idMedicoPaciente` int(11) NOT NULL,
   `fecha` date DEFAULT NULL,
   `hora` time DEFAULT NULL,
@@ -288,7 +288,7 @@ CREATE TABLE `Citas` (
   PRIMARY KEY (`idCita`),
   KEY `fk_Citas_1_idx` (`idMedicoPaciente`),
   CONSTRAINT `fk_Citas_1` FOREIGN KEY (`idMedicoPaciente`) REFERENCES `MedicoPaciente` (`idMedicoPaciente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -434,7 +434,7 @@ CREATE TABLE `Direccion` (
   `numExt` varchar(20) DEFAULT NULL,
   `numInt` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idDireccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -443,7 +443,7 @@ CREATE TABLE `Direccion` (
 
 LOCK TABLES `Direccion` WRITE;
 /*!40000 ALTER TABLE `Direccion` DISABLE KEYS */;
-INSERT INTO `Direccion` VALUES (1,'Distrito Federal','Gustavo A. Madero','Linda Vista','55024','Unidad Linda Vista Vallejo','35 ','2'),(2,'Distrito Federal','Miguel Hidalgo','Bosques de Ecatepec','55036','Violeta','99','NULL'),(3,'Distrito Federal','Miguel Hidalgo','Evolución','57000','Caballo Bayo','40','NULL'),(4,'Distrito Federal','Iztacalco','El Retoño','09840','Manuel Acuña','90','3'),(5,'Distrito Federal','Iztacalco','Ramos Millan','99901','Tlacotal M','2224','NULL'),(6,'Distrito Federal ','Gustavo A. Madero','Fuego Nuevo','09869','Saldifí','770','9'),(7,'Distrito Federal','Benito Juarez','Bosques de México','54073','Alfredo Chavero','89','NULL'),(8,'Distrito Federal ','Coyoacán','Jardines de Satélite','53370','Los Arcos','39','NULL');
+INSERT INTO `Direccion` VALUES (1,'Distrito Federal','Gustavo A. Madero','Linda Vista','55024','Unidad Linda Vista Vallejo','35 ','2'),(2,'Distrito Federal','Miguel Hidalgo','Bosques de Ecatepec','55036','Violeta','99','NULL'),(3,'Distrito Federal','Miguel Hidalgo','Evolución','57000','Caballo Bayo','40','NULL'),(4,'Distrito Federal','Iztacalco','El Retoño','09840','Manuel Acuña','90','3'),(5,'Distrito Federal','Iztacalco','Ramos Millan','99901','Tlacotal M','2224','NULL'),(6,'Distrito Federal ','Gustavo A. Madero','Fuego Nuevo','09869','Saldifí','770','9'),(7,'Distrito Federal','Benito Juarez','Bosques de México','54073','Alfredo Chavero','89','NULL'),(8,'Distrito Federal ','Coyoacán','Jardines de Satélite','53370','Los Arcos','39','NULL'),(9,NULL,'TlÃ¡huac',NULL,NULL,'Avenida siempre viva','12',NULL);
 /*!40000 ALTER TABLE `Direccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -624,7 +624,7 @@ CREATE TABLE `Paciente` (
 
 LOCK TABLES `Paciente` WRITE;
 /*!40000 ALTER TABLE `Paciente` DISABLE KEYS */;
-INSERT INTO `Paciente` VALUES (2,1,8),(3,0,7),(4,0,4),(5,1,5),(7,0,6);
+INSERT INTO `Paciente` VALUES (2,1,8),(3,0,7),(4,0,4),(5,1,5),(7,0,6),(8,0,9);
 /*!40000 ALTER TABLE `Paciente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -815,7 +815,7 @@ CREATE TABLE `Usuario` (
   PRIMARY KEY (`idUsuario`,`correo`),
   KEY `fk_Usuario_TipoUsuario1_idx` (`TipoUsuario_TipoUsuario`),
   CONSTRAINT `fk_Usuario_TipoUsuario1` FOREIGN KEY (`TipoUsuario_TipoUsuario`) REFERENCES `TipoUsuario` (`TipoUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -824,7 +824,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (1,'marlb.100@gmail.com','medico1234','Margarita','López Bustamante','Femenino',1,'0000-00-00 00:00:00'),(2,'alicia_03@hotmail.com','Au.1998','Alicia','Espitia Martínez','Femenino',2,'1994-12-07 00:00:00'),(3,'fer_moreno@gmail.com','ferMA-001','Fernando','Moreno Avilés','Masculino',1,'0000-00-00 00:00:00'),(4,'hernandez10@gmail.com','berenice19.0','Berenice ','Hernández López','Femenino',1,'0000-00-00 00:00:00'),(5,'kevin_mill@hotmail.com','kevin-system','Kevin','Popoca Ramírez','Masculino ',1,'0000-00-00 00:00:00'),(6,'alan.medico@gmail.com','universo.10','Alan','Valdivia Chávez','Masculino',2,'0000-00-00 00:00:00'),(7,'javier-perez@hotmail.com','jvrDVP.dieta','Javier','Del Valle Pérez','Masculino',1,'0000-00-00 00:00:00');
+INSERT INTO `Usuario` VALUES (1,'marlb.100@gmail.com','medico1234','Margarita','López Bustamante','Femenino',1,'0000-00-00 00:00:00'),(2,'alicia_03@hotmail.com','Au.1998','Alicia','Espitia Martínez','Femenino',1,'1994-12-07 00:00:00'),(3,'fer_moreno@gmail.com','ferMA-001','Fernando','Moreno Avilés','Masculino',1,'0000-00-00 00:00:00'),(4,'hernandez10@gmail.com','berenice19.0','Berenice ','Hernández López','Femenino',1,'0000-00-00 00:00:00'),(5,'kevin_mill@hotmail.com','kevin-system','Kevin','Popoca Ramírez','Masculino ',1,'0000-00-00 00:00:00'),(6,'alan.medico@gmail.com','universo.10','Alan','Valdivia Chávez','Masculino',2,'0000-00-00 00:00:00'),(7,'javier-perez@hotmail.com','jvrDVP.dieta','Javier','Del Valle Pérez','Masculino',1,'0000-00-00 00:00:00'),(8,'jcgarciamtz@outlook.com','pepeeltoro','Juan Carlos','Garcia','Masculino',2,NULL);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -880,6 +880,57 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `CambiarAlimento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CambiarAlimento`(idAli int,idReg int,fecha DATE)
+BEGIN
+	DECLARE categoria INT;
+    DECLARE aporte FLOAT;
+    DECLARE nuevoAlimento INT;
+    
+    SELECT Categoria_idCategoria
+		INTO @categoria
+	FROM AlimentoCategoria
+		WHERE Alimento_idAlimento = idAli;
+    
+    SELECT caloriasAlimento
+		INTO @aporte
+	FROM Alimento
+		WHERE idAlimento = idAli;
+        
+	SELECT a.idAlimento
+		INTO @nuevoAlimento
+	FROM Alimento a
+		inner join AlimentoCategoria ac
+		on ac.Alimento_idAlimento = a.idAlimento
+	WHERE ac.Categoria_idCategoria = @categoria
+		AND a.caloriasAlimento BETWEEN @aporte*.90 AND @aporte*1.05
+        AND a.idAlimento <> idAli
+    ORDER BY RAND() LIMIT 1;
+    
+   -- SELECT @nuevoAlimento,idAli,fecha,idReg;
+    
+    UPDATE DietasNoAprobadas 
+		SET idAlimento = @nuevoAlimento
+	where idAlimento = idAli
+		 AND fechaRegistro = fecha
+        AND idRegimen = idReg;
+	
+    SELECT idAlimento,nombre from Alimento where idAlimento = @nuevoAlimento;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `ConsultarDieta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -902,7 +953,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ConsultarRegimen` */;
+/*!50003 DROP PROCEDURE IF EXISTS `ConsultarHistorialRegimen` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -912,15 +963,13 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarRegimen`(idMP int,idD int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarHistorialRegimen`(idUP int)
 BEGIN
-	SELECT 'Calorias',d.caloriasDieta FROM Dieta d where d.idDieta = idD
-	UNION
-    select n.nombre,nd.cantidad from Dieta d inner join NutrientesDieta nd on d.idDieta = nd.idDieta
-		inner join Nutrientes n on n.idNutrientes = nd.idNutriente
-	where idMedicoPaciente = idMP and d.idDieta = idD;
-    
-    
+SELECT n.nombre,nd.cantidad,d.fechaInicio,d.fechaFin FROM Dieta d 
+INNER JOIN MedicoPaciente mp ON mp.idMedicoPaciente = d.idMedicoPaciente
+INNER JOIN NutrientesDieta nd ON d.idDieta = nd.idDieta
+INNER JOIN Nutrientes n ON n.idNutrientes = nd.idNutriente
+WHERE mp.Paciente_idUsuarioPaciente = idUP AND d.idDieta != (SELECT MAX(idDieta) FROM Dieta) ORDER BY d.idDieta, n.nombre;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1058,10 +1107,10 @@ BEGIN
    
 -- PLATO FUERTE Y ENTRADA PARA LA COMIDA
 	
-	INSERT INTO PlatoFuertePersonalizado SELECT * from PlatoFuerte where caloriasPlatoFuerte BETWEEN @totalCalorias*.15 AND @totalCalorias*.20 ORDER BY RAND();
+	INSERT INTO PlatoFuertePersonalizado SELECT * from PlatoFuerte where caloriasPlatoFuerte BETWEEN @totalCalorias*.15 AND @totalCalorias*.20 ORDER BY RAND() LIMIT 1000;
    -- SELECT * from PlatoFuertePersonalizado;
     
-    INSERT INTO PlatoEntradaPersonalizado SELECT * from PlatoEntrada where caloriasPlatoEntrada BETWEEN @totalCalorias*.10 AND @totalCalorias*.15 ORDER BY RAND();
+    INSERT INTO PlatoEntradaPersonalizado SELECT * from PlatoEntrada where caloriasPlatoEntrada BETWEEN @totalCalorias*.10 AND @totalCalorias*.15 ORDER BY RAND() LIMIT 1000;
 	-- SELECT * from PlatoEntradaPersonalizado;
     
 -- BEBIDAS PARA DESAYUNO,COMIDA Y CENA; POSTRE PARA COMIDA
@@ -1088,17 +1137,17 @@ BEGIN
 
     -- REGISTRA LOS PLATOS MEDIOS (PARA EL DESAYUNO) Y LOS PLATOS LIGEROS (Para la cena)
     
-    INSERT INTO PlatoLigero  SELECT * FROM PlatoEntrada where caloriasPlatoEntrada between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() ;
-	INSERT INTO PlatoLigero	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() ;
+    INSERT INTO PlatoLigero  SELECT * FROM PlatoEntrada where caloriasPlatoEntrada between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() LIMIT 500;
+	INSERT INTO PlatoLigero	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.08 AND @totalCalorias*.12 order by rand() LIMIT 500;
     -- SELECT * from PlatoLigero;
     
     
-	INSERT INTO PlatoMedio	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.12 AND @totalCalorias*.15;
+	INSERT INTO PlatoMedio	SELECT * FROM PlatoFuerte where caloriasPlatoFuerte between @totalCalorias*.12 AND @totalCalorias*.15 order by RAND() limit 500;
     -- SELECT * from PlatoMedio;
     
 	INSERT INTO DesayunoPersonalizado (idBebida,idPlatoMediano,idFruta,sumaCalorias)
     SELECt b.idPlato,pm.idPlato,f.idAlimento,(pm.calorias + b.calorias + f.calorias)
-		from PlatoMedio pm,BebidasPersonalizado b,Fruta f ;
+		from PlatoMedio pm,BebidasPersonalizado b,Fruta f order by rand() LIMIT 800;
     
     SELECT idBebida,idPlatoMediano,idFruta,sumaCalorias
     INTO @DidBebida,@DidPlatoM,@DidFruta,@sumCaloriasDes
@@ -1112,7 +1161,7 @@ BEGIN
     -- SELECT @totalCalorias,@sumCalorias;
 -- FIN DEL DESAYUNO
 	DELETE FROM BebidasPersonalizado where idPlato<=15000;
-    INSERT INTO BebidasPersonalizado SELECT * from Bebida where caloriasBebida <= @totalCalorias*.05 order by RAND() LIMIT 75;
+    INSERT INTO BebidasPersonalizado SELECT * from Bebida where caloriasBebida <= @totalCalorias*.05 order by RAND() LIMIT 200;
      INSERT INTO CenaPersonalizada(idBebida,idPlatoLigero,sumaCalorias) 
 		SELECT b.idPlato,pl.idPlato,(pl.calorias + b.calorias) FROM BebidasPersonalizado b,PlatoLigero pl LIMIT 4500;
 	 SELECT idBebida,idPlatoLigero,sumaCalorias
@@ -1148,14 +1197,16 @@ BEGIN
 	*/
 	-- INSERT INTO AlimentosDieta (idAlimento,idDieta,Tiempo_idTiempo)
 	-- SELECT ad.idAlimento,@idRegimen,ad.Tiempo_idTiempo from AlimentoDieta ad;
-    
-    INSERT INTO DietasNoAprobadas
+	DELETE FROM DietasNoAprobadas
+		WHERE fechaRegistro = NOW() AND idRegimen = @idRegimen;
+  
+  INSERT INTO DietasNoAprobadas
 		SELECT @idRegimen,NOW(),idAlimento,Tiempo_idTiempo
 	FROM AlimentoDieta;
     
     SELECT ad.idAlimento,a.nombre,@idRegimen,ad.Tiempo_idTiempo 
 		from AlimentoDieta ad
-	inner join Alimento a on a.idAlimento = ad.idAlimento order by ad.Tiempo asc; 
+	inner join Alimento a on a.idAlimento = ad.idAlimento order by ad.Tiempo_idTiempo asc; 
     
     
     drop table AlimentoDieta;
@@ -1467,4 +1518,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-18 22:57:55
+-- Dump completed on 2015-07-20 10:35:40

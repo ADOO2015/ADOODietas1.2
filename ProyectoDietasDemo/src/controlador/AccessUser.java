@@ -19,6 +19,7 @@ public class AccessUser {
 			Usuario myuser= busca.findByUsuario(username);
 			Usuario myuser1 =busca.findByContrasena(password);
 			
+			System.out.println("***"+myuser.getId()+"****");
 			if(myuser !=null && myuser.getPassword().equals(password)){
 				tipo =myuser.getTipo();
 				usuario=myuser;

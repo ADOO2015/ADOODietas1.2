@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="pojos.Usuario"%>
+    pageEncoding="ISO-8859-1" import="pojos.Usuario" import="pojos.Dieta" import="pojos.AlimentoDieta" import="pojos.Regimen"%>
         <%
   //tipo 1 autorizar pacientes, tipo 2 pcientes del doctor
     HttpSession sesion = request.getSession();
@@ -32,9 +32,17 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
               <li><h3> <%
-                   	Usuario user =(Usuario)session.getAttribute("Usuario");
-                   	String nombre =user.getNombre();
-                    out.println(nombre);
+              		HttpSession s = session;
+                   	Usuario user =(Usuario)s.getAttribute("Usuario");
+                  	String nombre =user.getNombre();
+  	                Dieta d = new Dieta();
+                   	if(s.getAttribute("dieta")!= null){
+                   		d = (Dieta)s.getAttribute("dieta");
+                   	}
+                   	Regimen r = new Regimen();
+                   	
+                  	r = (Regimen)s.getAttribute("regimen");
+                   	out.println(nombre);
                     %></h3></li>
               <li><a href="CerrarSesion.jsp">Cerrar Sesion</a></li>
 
@@ -82,6 +90,13 @@
 <div class="row">	
              <div class="col-lg-8">
 						<h1>Dieta</h1>
+							<%
+								if(request.getParameter("aprobada")!= null){
+									%>
+									<h3>La dieta ha sido aprobada.</h3>
+									<%
+								}
+							%>
                             <div class="jumbotron">
 							<table class="table">
 							<tr>
@@ -90,61 +105,86 @@
 								<h3><span class="label label-default">Desayuno</span></h3>
 							   <div class="panel panel-default">
 								<table class="table">
+								<%for(AlimentoDieta ad : d.getDesayuno()){ %>
 								<tr>
-								<td>
-								<a href="#"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
-								</td>
-								<td>Alimento de desayuno</td>
-								<td><a href="#"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
+									</td>	
+									<td><%out.write(ad.getNombre());%></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a>
+									</td>
 								<tr>
+								<%} %>
 								</table>							  
 								</div>
 							<h3><span class="label label-default">Refrigerio matutino</span></h3>
 							   <div class="panel panel-default">
 								<table class="table">
+								<%for(AlimentoDieta ad : d.getColacionMatutina()){ %>
 								<tr>
-								<td>
-								<a href="#"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
-								</td>
-								<td>Alimento de desayuno</td>
-								<td><a href="#"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
+									</td>
+									<td><%out.write(ad.getNombre());%></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a>
+									</td>
 								<tr>
+								<%} %>
 								</table>							  
 								</div>
 							<h3><span class="label label-default">Comida</span></h3>
 							   <div class="panel panel-default">
 								<table class="table">
+								<%for(AlimentoDieta ad : d.getComida()){ %>
 								<tr>
-								<td>
-								<a href="#"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
-								</td>
-								<td>Alimento de desayuno</td>
-								<td><a href="#"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a></td>
+									<td>
+										<a
+														href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img
+															src="img/iconos/izqui.svg"
+															style="transform: rotate(90deg); width: 20;" /></a>
+													</td>	
+									
+									<td><%out.write(ad.getNombre());%></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a>
+									</td>
 								<tr>
+								<%} %>
 								</table>							  
 								</div>
 							<h3><span class="label label-default">Refrigerio vespertino</span></h3>
 							   <div class="panel panel-default">
 								<table class="table">
+								<%for(AlimentoDieta ad : d.getColacionVespertina()){ %>
 								<tr>
-								<td>
-								<a href="#"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
-								</td>
-								<td>Alimento de desayuno</td>
-								<td><a href="#"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
+									</td>	
+									
+									<td><%out.write(ad.getNombre());%></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a>
+									</td>
 								<tr>
+								<%} %>
 								</table>							  
 								</div>
 							<h3><span class="label label-default">Cena</span></h3>
 							   <div class="panel panel-default">
 								<table class="table">
+								<%for(AlimentoDieta ad : d.getCena()){ %>
 								<tr>
-								<td>
-								<a href="#"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
-								</td>
-								<td>Alimento de desayuno</td>
-								<td><a href="#"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/izqui.svg"  style="transform: rotate(90deg);width: 20;"/></a>
+									</td>	
+									<td><%out.write(ad.getNombre());%></td>
+									<td>
+										<a href="javascript:nuevoAlimento(<%=ad.getIdAlimento()%>)"><img src="img/iconos/derecha.svg"  style="transform: rotate(-90deg);width: 20;"/></a>
+									</td>
 								<tr>
+								<%} %>
 								</table>							  
 								</div>
 							</div>
@@ -153,25 +193,23 @@
 							<div class="col-lg-9">
 							<div class="panel panel-default">
 							  <div class="panel-body">
-								<h3>Regimen abrobado:</h3>
+								<h3>Regimen aprobado:</h3>
 								<div>
-								  <label>Energía:</label>
+								  <label>Energía:<%=r.getCalorias()%></label>
 								  <br>
-								  <label>Proteínas:</label>
+								  <label>Proteínas:<%=r.getProteinas()%></label>
 								  <br>
-								  <label>Carbohidratos:</label>
+								  <label>Carbohidratos:<%=r.getCarbohidratos()%></label>
 								  <br>
-								  <label>Lípidos:</label>
+								  <label>Lípidos<%=r.getLipidos()%>:</label>
 								  <br>
-								  <label>Colesterol</label>
-								  <br>
-								  <label>Fibra:</label>
+								  <label>Fibra:<%=r.getFibra()%></label>
 								  <br>
 								</div>
 								<div class="form-group">
 					
-									<p class="bs-component"><button type="reset" class="btn btn-sucess btn-xs">Generar otra dieta</button></p>
-									<p class="bs-component"><button type="submit" class="btn btn-sucess btn-xs">Aceptar dieta</button></p>
+									<p class="bs-component"><button onclick="javascript:nuevaDieta();" class="btn btn-sucess btn-xs">Generar otra dieta</a></p>
+									<p class="bs-component"><button onclick="javascript:aceptarDieta();" class="btn btn-sucess btn-xs">Aceptar dieta</button></p>
 									<p class="bs-component"><button type="submit" class="btn btn-sucess btn-xs">Imprimir dieta</button></p>
 								
 								</div>
@@ -187,7 +225,24 @@
                         </div>
 
 				</div>
-            </div>
+				<div class="col-lg-8" style="display:none" id="divConfirmacion">
+					<h3>¿Seguro que desea aprobar esta dieta para el día de hoy? </h3>
+					<br/>
+					<button onclick="javascript:aprobarDieta();" class="btn btn-sucess btn-xs">Si</button>
+					<br/>
+					<button onclick="javascript:rechazarDieta();" class="btn btn-sucess btn-xs">No</button>
+				</div>
+				<script>
+				function aprobarDieta(){
+					$.get("ControladorDieta?operacion=3",function(data){
+						location.reload();
+					});
+				}
+				function rechazarDieta(){	
+					$("#divConfirmacion").hide();
+				}
+				</script>
+</div>
             
         </div>
      <div class="container" style="margin-top:100px;background:#213029;color:#FFF;width:100%;">
@@ -215,7 +270,7 @@
 			</div>
 			
 			<div class="col-md-4">
-				Conoceno
+				Conocenos
 			</div>
 			
 		</div> <!-- /row -->
@@ -223,5 +278,21 @@
 		
 
 </div>   
+	<script>
+		function nuevoAlimento(id){
+			$.get("ControladorDieta?operacion=2&idAlimento="+id,function(data){
+				location.reload();
+			});
+			
+		}	
+		function nuevaDieta(){
+			$.get("ControladorDieta?operacion=1",function(data){
+				location.reload();
+			});
+		}
+		function aceptarDieta(){
+			$("#divConfirmacion").show();
+		}
+	</script>
     </body>
 </html>
