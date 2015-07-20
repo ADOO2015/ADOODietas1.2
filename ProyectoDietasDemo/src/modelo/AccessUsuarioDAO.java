@@ -346,11 +346,11 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public void insertinUsuario(String nombre, String apellidos, String correo,
-			String password, String sexo, String TipoUsuario)
+			String password, String sexo, String TipoUsuario,String fecha)
 			throws SQLException {
 		String insertQuery = "INSERT INTO Usuario"
-				+ "(nombre, apellido, correo, pass,sexo,TipoUsuario_TipoUsuario) VALUES"
-				+ "('"+nombre+"','"+apellidos+"','"+correo+"','"+password+"','"+sexo+"',"+TipoUsuario+")";
+				+ "(nombre, apellido, correo, pass,sexo,TipoUsuario_TipoUsuario,fechaNacimiento) VALUES"
+				+ "('"+nombre+"','"+apellidos+"','"+correo+"','"+password+"','"+sexo+"',"+TipoUsuario+",'"+fecha+"')";
 		con.insert(insertQuery);
 		
 	}
