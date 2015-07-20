@@ -17,7 +17,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	@Override
 	public Usuario create(String usuario, String nombre, String apellidos,
 			String correo, String password) throws SQLException {
-		String insertUserSQL = "INSERT INTO USUARIO"
+		String insertUserSQL = "INSERT INTO Usuario"
 				+ "(USUARIO, NOMBRE, APELLIDOS, CORREO, PASSWORD) VALUES"
 				+ "(?,?,?,?,?)";
 
@@ -44,7 +44,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public Collection<Usuario> findAll() throws SQLException {
-		String queryAll = "SELECT * FROM usuario"; // example es el nombre de la
+		String queryAll = "SELECT * FROM Usuario"; // example es el nombre de la
 													// tabla
 
 		ArrayList<Usuario> ls = new ArrayList<Usuario>();
@@ -114,7 +114,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 			return 0;
 	}
 	public Usuario findByUsuario(String usuario) throws SQLException {
-		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM direccion as d INNER JOIN usuario as u on d.idDireccion=u.idUsuario "
+		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM Direccion as d INNER JOIN Usuario as u on d.idDireccion=u.idUsuario "
 				+ " INNER JOIN TipoUsuario as t ON u.TipoUsuario_TipoUsuario=t.TipoUsuario  where u.correo= ?";
 		
 		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
@@ -150,7 +150,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	}
 	
 	public Usuario findByContrasena(String password) throws SQLException {
-		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM direccion as d INNER JOIN usuario as u on d.idDireccion=u.idUsuario "
+		String queryByUser = "SELECT d.estado,d.delMun,d.colonia,d.cp,d.calle,d.numExt,d.numInt, u.idUsuario,u.nombre,u.apellido,u.sexo,u.correo,u.pass,t.Descripcion FROM Direccion as d INNER JOIN Usuario as u on d.idDireccion=u.idUsuario "
 				+ " INNER JOIN TipoUsuario as t ON u.idUsuario=t.TipoUsuario  where u.pass= ? ";
 		
 		
@@ -189,7 +189,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public void update(Usuario usuario) throws SQLException {
-		String updateUserSQL = "UPDATE USUARIO SET nombre = ?, "
+		String updateUserSQL = "UPDATE Usuario SET nombre = ?, "
 				+ "apellidos = ?, correo = ?, password = ? WHERE usuario = ?";
 
 		PreparedStatement prepStmt = con.builldPreparedStatement(updateUserSQL);
@@ -252,7 +252,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public Usuario findByCorreo(String correo) throws SQLException {
-		String queryByUser = "SELECT * FROM USUARIO WHERE usuario.correo = ?";
+		String queryByUser = "SELECT * FROM Usuario WHERE Usuario.correo = ?";
 
 		PreparedStatement prepStmt = con.builldPreparedStatement(queryByUser);
 
@@ -281,8 +281,8 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public Collection<Usuario> getAllPregistered() throws SQLException {
-		String q = "SELECT * FROM USUARIO U INNER JOIN PACIENTE P ON U.IDUSUARIO = P.IDUSUARIOPACIENTE " 
-				+ "NATURAL JOIN ESTADOPACIENTE WHERE DESCESTADOPACIENTE = 'PreRegistro'";
+		String q = "SELECT * FROM Usuario U INNER JOIN Paciente P ON U.idUsuario = P.idUsuarioPaciente " 
+				+ "NATURAL JOIN EstadoPaciente WHERE descEstadoPaciente = 'PreRegistro'";
 
 		ArrayList<Usuario> ls = new ArrayList<Usuario>();
 
@@ -328,7 +328,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	@Override
 	public void insertinTipoUsuario(String correo, String descripcion)
 			throws SQLException {
-		String insertQuery = "INSERT INTO tipousuario"
+		String insertQuery = "INSERT INTO TipoUsuario"
 				+ "(correo,Descripcion) VALUES"
 				+ "("+correo+","+descripcion+")";
 		con.insert(insertQuery);
@@ -336,7 +336,7 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 
 	@Override
 	public String getIdTipoUsuario(String correo) throws SQLException {
-		String query="SELECT TipoUsuario from tipousuario where correo='"+correo+"'";
+		String query="SELECT TipoUsuario from TipoUsuario where correo='"+correo+"'";
 		ResultSet res=con.query(query);
 		String id="";
 		while(res.next())
@@ -387,8 +387,8 @@ public class AccessUsuarioDAO implements UsuarioDAO {
 	@Override
 	public Collection<Usuario> bySearchPregistered(String q)
 			throws SQLException {
-		String searchQuery = "SELECT * FROM USUARIO U INNER JOIN PACIENTE P ON U.IDUSUARIO = P.IDUSUARIOPACIENTE " 
-				+ "NATURAL JOIN ESTADOPACIENTE WHERE (nombre LIKE ? OR apellido LIKE ? OR correo LIKE ?) AND DESCESTADOPACIENTE = 'PreRegistro'";
+		String searchQuery = "SELECT * FROM Usuario U INNER JOIN Paciente P ON U.IdUsuario = P.idUsuarioPaciente " 
+				+ "NATURAL JOIN EstadoPaciente WHERE (nombre LIKE ? OR apellido LIKE ? OR correo LIKE ?) AND descEstadoPaciente = 'PreRegistro'";
 
 		PreparedStatement prepStmt = con.builldPreparedStatement(searchQuery);
 		ArrayList<Usuario> ls = new ArrayList<Usuario>();
