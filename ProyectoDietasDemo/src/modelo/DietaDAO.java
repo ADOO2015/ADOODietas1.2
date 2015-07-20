@@ -17,7 +17,7 @@ public class DietaDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL GenerarDieta(?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, Integer.parseInt(u.getId()));
 			Dieta d = new Dieta();
 			d.setFecha(new Date(System.currentTimeMillis()));
@@ -48,7 +48,7 @@ public class DietaDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL AprobarDieta(?,?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, d.getIdDieta());
 			ps.setDate(2, d.getFecha());
 			ps.execute();
@@ -60,6 +60,35 @@ public class DietaDAO {
 		}
 	}
 
+	public Dieta cambiarAlimento(Dieta d,AlimentoDieta a){
+		try{
+			PreparedStatement ps;
+			String query = "CALL CambiarAlimento(?,?,?)";
+			ps = conn.buildPreparedStatement(query);
+			ps.setInt(1, a.getIdAlimento());
+			ps.setInt(2, d.getIdDieta());
+			ps.setDate(2,d.getFecha());
+			ResultSet rs  = ps.executeQuery();
+			rs.beforeFirst();
+			rs.next();
+				AlimentoDieta ad = new AlimentoDieta();
+				ad.setIdAlimento(rs.getInt(1));
+				ad.setNombre(rs.getString(2));
+				ad.setTiempo(a.getTiempo());
+			Dieta nd = new Dieta();
+			nd.setIdDieta(d.getIdDieta());
+			nd.setFecha(d.getFecha());
+			d.getAlimentos().remove(a);
+			d.getAlimentos().add(ad);
+			nd.setAlimentos(d.getAlimentos());
+			return nd;
+		}	
+		catch(SQLException sex){
+			sex.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static void main(String args[]) throws IOException{
 		Usuario u = new Usuario();
 		u.setId("2");
@@ -73,6 +102,8 @@ public class DietaDAO {
 		System.out.println("Dieta registrada,verificar");
 		
 	}
+	
+
 }
 
 

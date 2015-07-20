@@ -22,7 +22,7 @@ public interface UsuarioDAO {
 	
 	public void update(Usuario usuario) throws SQLException;
 	
-	public void insertinUsuario(String nombre, String apellidos, String correo, String password,String sexo,String TipoUsuario) throws SQLException;
+	public void insertinUsuario(String nombre, String apellidos, String correo, String password,String sexo,String TipoUsuario,String fecha) throws SQLException;
 	
 	public String isUserResgistered(String correo) throws SQLException;
 	
@@ -40,10 +40,7 @@ public interface UsuarioDAO {
 
 	int estaRegistrado(String id) throws SQLException;
 	
-	int obtenerIdMP(int idPaciente) throws SQLException;
-	
-	public Collection<Regimen> obtenerHistorialRegimen(int idMP) throws SQLException;
-public String getApellido(String correo) throws SQLException;
+	public String getApellido(String correo) throws SQLException;
 	
 	public String getNombre(String correo) throws SQLException;
 	

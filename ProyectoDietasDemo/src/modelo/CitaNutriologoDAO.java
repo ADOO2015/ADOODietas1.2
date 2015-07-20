@@ -20,7 +20,7 @@ public class CitaNutriologoDAO {
 			query="SELECT idCita,idMedicoPaciente,fecha,hora,observaciones FROM citas c NATURAL JOIN medicopaciente mc WHERE mc.Paciente_idUsuarioPaciente=? AND mc.Medico_idUsuarioMedico=? ORDER BY fecha DESC";
 		}
 		PreparedStatement prepStmt;
-			prepStmt = con.builldPreparedStatement(query);
+			prepStmt = con.buildPreparedStatement(query);
 			prepStmt.setString(1, String.valueOf(idPac));
 			prepStmt.setString(2, String.valueOf(idMed));
 			ResultSet rs = prepStmt.executeQuery();
@@ -41,7 +41,7 @@ public class CitaNutriologoDAO {
 		int idMedPac=0;
 		String query="SELECT idMedicoPaciente, fechaInicio FROM medicopaciente WHERE Paciente_idUsuarioPaciente=? AND Medico_idUsuarioMedico=? order by fechaInicio desc";
 		PreparedStatement prepStmt;
-		prepStmt = con.builldPreparedStatement(query);
+		prepStmt = con.buildPreparedStatement(query);
 		prepStmt.setString(1, String.valueOf(idPac));
 		prepStmt.setString(2, String.valueOf(idMed));
 		ResultSet rs = prepStmt.executeQuery();
@@ -52,7 +52,7 @@ public class CitaNutriologoDAO {
 		String insertCitaSQL = "INSERT INTO citas"
 				+ "(idMedicoPaciente,fecha,hora,observaciones) VALUES (?,?,?,?)";
 		
-		PreparedStatement prepStmt2 = con.builldPreparedStatement(insertCitaSQL);
+		PreparedStatement prepStmt2 = con.buildPreparedStatement(insertCitaSQL);
 		prepStmt2.setString(1, String.valueOf(idMedPac));
 		prepStmt2.setString(2, String.valueOf(fecha));
 		prepStmt2.setString(3, String.valueOf(hora));
@@ -62,7 +62,7 @@ public class CitaNutriologoDAO {
 	
 	public void deleteCita(int idCita) throws SQLException {
 		String deleteCitaSQL = "DELETE FROM citas WHERE idCita = ?";
-		PreparedStatement prepStmt = con.builldPreparedStatement(deleteCitaSQL);
+		PreparedStatement prepStmt = con.buildPreparedStatement(deleteCitaSQL);
 		prepStmt.setString(1, String.valueOf(idCita));
 		prepStmt.executeUpdate();
 	}
