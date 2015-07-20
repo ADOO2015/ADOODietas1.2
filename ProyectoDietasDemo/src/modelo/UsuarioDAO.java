@@ -22,7 +22,7 @@ public interface UsuarioDAO {
 	
 	public void update(Usuario usuario) throws SQLException;
 	
-	public void insertinUsuario(String nombre, String apellidos, String correo, String password,String sexo,String TipoUsuario) throws SQLException;
+	public void insertinUsuario(String nombre, String apellidos, String correo, String password,String sexo,String TipoUsuario,String fecha) throws SQLException;
 	
 	public String isUserResgistered(String correo) throws SQLException;
 	
