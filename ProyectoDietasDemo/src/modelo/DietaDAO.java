@@ -59,6 +59,29 @@ public class DietaDAO {
 			return false;
 		}
 	}
+	public Dieta cambiarAlimento(Dieta d,AlimentoDieta a){
+		try{
+			PreparedStatement ps;
+			String query = "CALL CambiarAlimento(?,?,?)";
+			ps = conn.builldPreparedStatement(query);
+			ps.setInt(1, a.getIdAlimento());
+			ps.setInt(2, d.getIdDieta());
+			ps.setDate(3, d.getFecha());
+			ResultSet rs = ps.executeQuery();
+			rs.first();
+			AlimentoDieta na = new AlimentoDieta();
+			na.setIdAlimento(rs.getInt(1));
+			na.setNombre(rs.getString(2));
+			na.setTiempo(a.getTiempo());
+			d.getAlimentos().remove(a);
+			d.getAlimentos().add(na);
+			return d;
+		}
+		catch(SQLException sex){
+			sex.printStackTrace();
+			return null;
+		}
+	}
 
 	public static void main(String args[]) throws IOException{
 		Usuario u = new Usuario();
