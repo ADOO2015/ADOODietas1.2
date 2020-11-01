@@ -17,7 +17,7 @@ public class ProgresoDAO {
 		
 		PreparedStatement prepStmt;
 		try {
-			prepStmt = con.builldPreparedStatement(query);
+			prepStmt = con.buildPreparedStatement(query);
 			prepStmt.setString(1, id);
 			ResultSet rs = prepStmt.executeQuery();
 			
@@ -47,7 +47,7 @@ public class ProgresoDAO {
 					+ "(idUsuarioPaciente,fechaRegistro,altura,peso,perimetroCintura,perimetroCadera,imc,icc,idActividad) VALUES"
 					+ "(?,?,?,?,?,?,?,?,1)";
 			
-			PreparedStatement prepStmt = con.builldPreparedStatement(insertUserSQL);
+			PreparedStatement prepStmt = con.buildPreparedStatement(insertUserSQL);
 			prepStmt.setString(1, id);
 			prepStmt.setString(2, fecha);
 			prepStmt.setString(3, altura);
