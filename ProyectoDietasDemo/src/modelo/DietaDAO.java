@@ -17,7 +17,7 @@ public class DietaDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL GenerarDieta(?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, Integer.parseInt(u.getId()));
 			Dieta d = new Dieta();
 			d.setFecha(new Date(System.currentTimeMillis()));
@@ -48,7 +48,7 @@ public class DietaDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL AprobarDieta(?,?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, d.getIdDieta());
 			ps.setDate(2, d.getFecha());
 			ps.execute();
@@ -63,7 +63,7 @@ public class DietaDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL CambiarAlimento(?,?,?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, a.getIdAlimento());
 			ps.setInt(2, d.getIdDieta());
 			ps.setDate(3, d.getFecha());

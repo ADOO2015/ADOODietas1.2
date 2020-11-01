@@ -15,7 +15,7 @@ public class RegimenDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL ConsultarUltimoRegimen(?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, Integer.parseInt(u.getId()));
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
@@ -53,7 +53,7 @@ public class RegimenDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL GenerarRegimen(?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, Integer.parseInt(u.getId()));
 			ResultSet rs = ps.executeQuery();
 			rs.beforeFirst();
@@ -89,7 +89,7 @@ public class RegimenDAO {
 		try{
 			PreparedStatement ps;
 			String query = "CALL RegistrarRegimen(?,?,?,?,?,?)";
-			ps = conn.builldPreparedStatement(query);
+			ps = conn.buildPreparedStatement(query);
 			ps.setInt(1, Integer.parseInt(u.getId()));
 			ps.setFloat(2, r.getCalorias());
 			ps.setFloat(3, r.getProteinas());
